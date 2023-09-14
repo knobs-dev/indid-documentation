@@ -5,10 +5,10 @@ layout: home
 hero:
   name: "Indid Docs"
   text: "A brand new website that helps you use Indid infrastructure"
-  tagline: My great project tagline
+  tagline: Use Account Abstraction in your project
   actions:
     - theme: brand
-      text: Markdown Examples
+      text: Get Started
       link: /markdown-examples
     - theme: alt
       text: API Examples
