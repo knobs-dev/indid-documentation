@@ -4,8 +4,8 @@ layout: home
 
 hero:
   name: "Indid Docs"
-  text: "A brand new website that helps you use Indid infrastructure"
-  tagline: Use Account Abstraction in your project
+  text: "Account Abstraction Infrastructure"
+  tagline: Simple and powerful APIs for your blockchain applications
   actions:
     - theme: brand
       text: Get Started
