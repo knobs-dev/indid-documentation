@@ -27,5 +27,8 @@ export default defineConfig({
         link: "https://github.com/knobs-dev/indid-documentation",
       },
     ],
+    search: {
+      provider: "local",
+    },
   },
 });
