@@ -12,14 +12,14 @@ const sidebars = {
       },
     ],
   },
-  middleware: {
-    text: "Middleware",
+  api: {
+    text: "API",
     collapsed: true,
     items: [
       { text: "Markdown Examples", link: "/markdown-examples" },
       {
-        text: "Bearer Authentication",
-        link: "/middleware/builtin/bearer-auth",
+        text: "Create Account",
+        link: "/api/test",
       },
       { text: "Cache", link: "/middleware/builtin/cache" },
     ],
@@ -38,7 +38,7 @@ export default defineConfig({
       { text: "Examples", link: "/markdown-examples" },
     ],
     sidebar: {
-      "/": [sidebars["gettingStarted"], sidebars["middleware"]],
+      "/": [sidebars["gettingStarted"], sidebars["api"]],
     },
     socialLinks: [
       {
