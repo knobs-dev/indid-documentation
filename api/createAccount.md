@@ -46,10 +46,7 @@ let config = {
   body: JSON.stringify(data),
 };
 
-try {
-  const response = await fetch(url, config)
-  return await response.json();
-} catch (error) {
-  console.log(error);
-}
+const response = await fetch(url, config)
+const JSONResponse = await response.json();
+
 ```
