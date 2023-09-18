@@ -1,9 +1,12 @@
 # Get the status of an userOperation
 
 Category: User Operation
+
 Description: Retrieves the status of an userOperation. (request type: string that represents the userOp transaction hash).
 The response is a JSON containing all the userOp info from the bundler.
+
 Type: GET
+
 URL: https://api.dev.indid.io/op-status
 
 ### Query Params
