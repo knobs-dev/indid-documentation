@@ -5,10 +5,12 @@ const sidebars = {
     text: "Getting Started",
     collapsed: true,
     items: [
-      { text: "Runtime API Examples", link: "/api-examples" },
       {
-        text: "Cloudflare Workers",
-        link: "/getting-started/cloudflare-workers",
+        text: "Getting Started",
+        link: "/getting-started/gettingStarted",
+      },
+      { text: "Details of Indid API",
+        link: "/getting-started/indidAPIDetails"
       },
     ],
   },
@@ -16,12 +18,30 @@ const sidebars = {
     text: "API",
     collapsed: true,
     items: [
-      { text: "Markdown Examples", link: "/markdown-examples" },
+      {
+        text: "Retrieve SDK Defaults",
+        link: "/api/getSDKDefaults",
+      },
       {
         text: "Create Account",
-        link: "/api/test",
+        link: "/api/createAccount",
       },
-      { text: "Cache", link: "/middleware/builtin/cache" },
+      {
+        text: "Get InitCode",
+        link: "api/getInitCode"
+      },
+      {
+        text: "Send UserOp",
+        link: "api/sendUserOp"
+      },
+      {
+        text: "Get UserOp status",
+        link: "api/getOpStatus"
+      },
+      {
+        text: "Sign UserOp for Paymaster Sponsorship",
+        link: "api/signPaymasterOp"
+      }
     ],
   },
 };
