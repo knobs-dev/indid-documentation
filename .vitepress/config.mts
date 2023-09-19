@@ -9,7 +9,9 @@ const sidebars = {
         text: "Getting Started",
         link: "/getting-started/gettingStarted",
       },
-      { text: "Introduction to Indid", link: "/getting-started/introductionToIndid" },
+      { text: "Details of Indid API",
+        link: "/getting-started/indidAPIDetails"
+      },
     ],
   },
   api: {
