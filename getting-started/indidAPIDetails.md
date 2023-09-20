@@ -2,10 +2,6 @@
 
 Through this API it is possible to interact with Indid service without the usage of the SDK but dealing directly with the endpoints of the backend.
 
-The base URL to send all API requests is https://api.dev.indid.io. HTTPS is required for all API requests.
-
-The Indid API follows RESTful conventions and all the operations are performed via `GET` and `POST` requests. Request and response bodies are encoded as JSON.
-
 To use all the features and, thus, enjoy the full experience of the Indid service, it is necessary to sign up for a subscription with KNOBS, which will give to the user access to all the calls exposed by the API, through the distribution of Compute Units (CU).
 
 ## Compute Units
@@ -28,6 +24,8 @@ The request is a POST and the request type is ICreateAccountRequest, an object c
 
 In case the user passes to the endpoint only the owner address, the other values are retrieved by the backend from the database according to the user's apiKey (mandatory in the request header).
 
+The apiKey is also used to check if the user owns the needed amount of compute units, mandatory to perform an account creation.
+
 The reply of this endpoint call returns to the client an object containing the smart contract wallet address and the transaction hash.
 
 ### InitCode
@@ -40,6 +38,9 @@ The request type is IInitCodeRequest, that is a JSON that contains the owner's a
 
 The reply of this method is a JSON containing the initCode.
 
+> ** Note **    
+Right now, using the initCode to create a smart contract wallet within a userOperation doesn't create an Indid account in the database. This feature will be available soon!
+
 ### Get the default values for createAccount
 
 A user can interact with this endpoint in order to retrieve the default values for account creation.
@@ -47,5 +48,51 @@ A user can interact with this endpoint in order to retrieve the default values f
 The Request contains the chainId (optional as in the initCode endpoint, useful for future multiple chains logic) and the apiKey in the header.
 
 The endpoint sends to the client a reply that is a JSON containing the factory address, the module address, the info about the guardians (same logic as above), the storage type ("shared" or "generalized") and the module type ("enterprise" or "user").
+
+## UserOperation
+
+A user can interact with Indid endpoints to send a userOperation, get a userOperation sponsored (user needs to own computeUnits) and can see the status of a userOperation
+
+### Sponsorization of a userOp
+
+A user can interact with this endpoint in order to receive the paymasterAndData field to insert as input in the crafting phase of a userOperation to send.
+
+The request contains the user's apiKey in the header (to check the available compute units) and a JSON that iis made of a partial userOperation (a IUserOperation without the paymasterAndData and signature fields). Check the detail of the endpoint to see the fields of the requests (the userOp structure follows the ERC-4337 standard).
+
+The reply is a JSON containing the crafted paymasterAndData, signed by Indid backend.
+
+### Send a userOperation
+
+A user can send a userOperation to the bundler by interacting with this endpoint.
+
+The request is a JSON containing a userOperation (IUserOperation). The structure of the userOp, as in the previous endpoint, follows the ERC-4337 standard.
+The user can insert a paymasterAndData field if wants the userOp to be sponsored by Indid paymaster (as above, there will be a check on his apiKey to verify the possession of the compute units) or, if he wants to pay the operation himself, leave it blank.
+
+The reply is a JSON containing the userOp hash.
+
+### Get the status of a userOperation
+
+With this endpoint, a user can check the status of a userOperation by inserting the hash of the userOp.
+
+The request is a JSON containing the opHash, while the reply is the userOperation receipt if it exists, otherwise 'null'.
+
+
+## Account Recovery
+
+Through this endpoint a user can recover his smart contract wallet.
+
+### Recover Account
+
+The backend sets a new owner for his smart contract wallet by sending a transaction on-chain that transfers the contract ownership.
+
+Request: a JSON containing the wallet address, the new owner's address, the signature, a nonce for the transaction, the deadline of the request and, optionally, the module address and additional params.
+
+The request must contain the apiKey in the header because, in order to perform an account recovery, the user must have a certain amount of compute units.
+
+The reply is a JSON containing the hash of the transaction that transferred the contract's ownership.
+
+
+
+
 
 

@@ -4,9 +4,9 @@ Category: User Operations
 
 Description: Sends a partial ERC-4337 userOperation (an userOp without paymasterAndData and signature) to the backend, that crafts the paymasterAndData field of the userOp and sends it back signed to the caller. (Request type IUserOperation)
 
-Type: POST
+Type: `POST`
 
-URL: https://api.dev.indid.io/sign-paymaster-op
+URL: /sign-paymaster-op
 
 ### Body Params (IUserOperation)
 

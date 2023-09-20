@@ -19,6 +19,10 @@ const sidebars = {
     collapsed: true,
     items: [
       {
+        text: "Endpoints Details",
+        link: "/api/endpointsDetailsIntro"
+      },
+      {
         text: "Retrieve SDK Defaults",
         link: "/api/getSDKDefaults",
       },
@@ -28,19 +32,23 @@ const sidebars = {
       },
       {
         text: "Get InitCode",
-        link: "api/getInitCode"
+        link: "/api/getInitCode"
       },
       {
         text: "Send UserOp",
-        link: "api/sendUserOp"
+        link: "/api/sendUserOp"
       },
       {
         text: "Get UserOp status",
-        link: "api/getOpStatus"
+        link: "/api/getOpStatus"
       },
       {
         text: "Sign UserOp for Paymaster Sponsorship",
-        link: "api/signPaymasterOp"
+        link: "/api/signPaymasterOp"
+      },
+      {
+        text: "Recover account",
+        link: "/api/recoverAccount"
       }
     ],
   },

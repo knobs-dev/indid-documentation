@@ -4,9 +4,9 @@ Category: Create Account
 
 Description: Returns the SDK default parameters for the account creation associated to a specific apiKey
 
-Type: GET
+Type: `GET`
 
-URL: https://api.dev.indid.io/get-sdk-defaults
+URL: /get-sdk-defaults
 
 ### Body Params
 

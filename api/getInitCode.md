@@ -4,9 +4,9 @@ Category: Create Account
 
 Description: Returns the initCode, useful for an account creation inside an userOperation. The request has a JSON as query param (IInitCodeRequest, that contains the parameters below)
 
-Type: GET
+Type: `GET`
 
-URL: https://api.dev.indid.io/initCode
+URL: /initCode
 
 ### Query Params (IInitCodeRequest)
 
