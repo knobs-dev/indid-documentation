@@ -1,6 +1,6 @@
 # Recover Account
 
-Category: Recover Account
+Category: `Recover Account`
 
 Description: Transfers the ownership of a smart contract wallet to a new owner. The request is a JSON (IRecoveryRequest) and the reply returns a JSON containing the hash of the transaction that changed the owner of the wallet.
 

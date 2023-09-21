@@ -1,6 +1,6 @@
-# Send an userOperation
+# Send a userOperation
 
-Category: User Operations
+Category: `User Operations`
 
 Description: Sends an ERC-4337 userOperation to the bundler, that will execute it (the request type is IUserOperation, a JSON containing the fields in body params)
 

@@ -1,6 +1,6 @@
 # Get the initCode
 
-Category: Create Account
+Category: `Create Account`
 
 Description: Returns the initCode, useful for an account creation inside an userOperation. The request has a JSON as query param (IInitCodeRequest, that contains the parameters below)
 

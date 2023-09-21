@@ -1,6 +1,6 @@
 # Create a new account
 
-Category: Create Account
+Category: `Create Account`
 
 Description: Creates a new smart contract wallet and the account in the database related to it. The request body is a JSON (type ICreateAccountRequest) containing the params below.
 

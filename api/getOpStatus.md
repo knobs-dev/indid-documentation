@@ -1,8 +1,8 @@
-# Get the status of an userOperation
+# Get the status of a userOperation
 
-Category: User Operation
+Category: `User Operation`
 
-Description: Retrieves the status of an userOperation. (request type: string that represents the userOp transaction hash).
+Description: Retrieves the status of a userOperation. (request type: string that represents the userOp transaction hash).
 The response is a JSON containing all the userOp info from the bundler.
 
 Type: `GET`

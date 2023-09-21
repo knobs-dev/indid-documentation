@@ -1,6 +1,6 @@
 # Retrieve SDK default values
 
-Category: Create Account
+Category: `Create Account`
 
 Description: Returns the SDK default parameters for the account creation associated to a specific apiKey
 
