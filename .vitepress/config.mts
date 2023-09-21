@@ -53,6 +53,16 @@ const sidebars = {
       },
     ],
   },
+  sdk: {
+    text: "SDK",
+    collapsed: true,
+    items: [ 
+      {
+        text: "SDK",
+        link: "/sdk/sdkIntro",
+      },
+    ]
+  }
 };
 
 // https://vitepress.dev/reference/site-config
@@ -67,7 +77,8 @@ export default defineConfig({
       { text: "Examples", link: "/markdown-examples" },
     ],
     sidebar: {
-      "/": [sidebars["gettingStarted"], sidebars["api"]],
+      "/": [sidebars["gettingStarted"], sidebars["api"], sidebars["sdk"]],
+      
     },
     socialLinks: [
       {
