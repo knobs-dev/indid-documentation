@@ -9,8 +9,9 @@ const sidebars = {
         text: "Getting Started",
         link: "/getting-started/gettingStarted",
       },
-      { text: "Details of Indid API",
-        link: "/getting-started/indidAPIDetails"
+      {
+        text: "Details of Indid API",
+        link: "/getting-started/indidAPIDetails",
       },
     ],
   },
@@ -20,7 +21,7 @@ const sidebars = {
     items: [
       {
         text: "Endpoints Details",
-        link: "/api/endpointsDetailsIntro"
+        link: "/api/endpointsDetailsIntro",
       },
       {
         text: "Retrieve SDK Defaults",
@@ -32,24 +33,24 @@ const sidebars = {
       },
       {
         text: "Get InitCode",
-        link: "/api/getInitCode"
+        link: "/api/getInitCode",
       },
       {
         text: "Send UserOp",
-        link: "/api/sendUserOp"
+        link: "/api/sendUserOp",
       },
       {
         text: "Get UserOp status",
-        link: "/api/getOpStatus"
+        link: "/api/getOpStatus",
       },
       {
         text: "Sign UserOp for Paymaster Sponsorship",
-        link: "/api/signPaymasterOp"
+        link: "/api/signPaymasterOp",
       },
       {
         text: "Recover account",
-        link: "/api/recoverAccount"
-      }
+        link: "/api/recoverAccount",
+      },
     ],
   },
 };

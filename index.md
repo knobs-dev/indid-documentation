@@ -4,22 +4,22 @@ layout: home
 
 hero:
   name: "Indid Docs"
-  text: "Account Abstraction Infrastructure"
+  text: "Smart Wallets Infrastructure"
   tagline: Simple and powerful APIs for your blockchain applications
   actions:
     - theme: brand
       text: Get Started
-      link: /markdown-examples
+      link: /getting-started/gettingStarted
     - theme: alt
       text: API Examples
       link: /api-examples
 
-features:
-  - title: Feature A
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature B
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - title: Feature C
-    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+# features:
+#   - title: Simple
+#     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+#   - title: Fast
+#     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+#   - title: Secure
+#     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
 
