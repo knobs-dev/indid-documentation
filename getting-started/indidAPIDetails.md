@@ -8,6 +8,23 @@ To use all the features and, thus, enjoy the full experience of the Indid servic
 
 For each type of subscription to the service, Indid will give to the user a different amount of Compute Units, that will be necessary to perform some actions in the application. In particular the account creation, the sponsorization of a userOperation and the account recovery needs that the caller account owns a certain amount of CU to complete the operation.
 
+
+## Bundler
+
+Indid uses the bundler developed by Infinitism team (https://github.com/eth-infinitism/bundler/tree/main).
+
+This bundler follows all the rules of ERC-4337 standard for account abstraction.
+
+## Networks
+
+Indid service is active on these networks:
+
+| Chain | Mainnet | Testnet |
+| --- | --- | --- |
+| Polygon | :heavy_check_mark: Polygon Mainnet  | :heavy_check_mark: Mumbai |
+| Ethereum | coming soon... | coming soon... |
+| Linea | coming soon... | coming soon... |
+
 ---
 
 Returning to the endpoints, through them it is possible to perform the operations that concern the creation of an account, the ones that are responsible for the recovery of an account and the ones that deal with User Operations.
