@@ -58,9 +58,22 @@ const sidebars = {
     collapsed: true,
     items: [ 
       {
-        text: "SDK",
-        link: "/sdk/sdkIntro",
+        text: "Getting Started",
+        link: "/sdk/gettingStarted",
       },
+      {
+        text: "Builder",
+        link: "/sdk/builder",
+      },
+      {
+        text: "Core SDK",
+        link: "/sdk/coreSdk",
+      },
+      {
+        text: "Admin SDK",
+        link: "/sdk/adminSdk",
+      },
+
     ]
   }
 };
