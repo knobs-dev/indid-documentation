@@ -8,7 +8,6 @@ To use all the features and, thus, enjoy the full experience of the Indid servic
 
 For each type of subscription to the service, Indid will give to the user a different amount of Compute Units, that will be necessary to perform some actions in the application. In particular the account creation, the sponsorization of a userOperation and the account recovery needs that the caller account owns a certain amount of CU to complete the operation.
 
-
 ## Bundler
 
 Indid uses the bundler developed by Infinitism team (https://github.com/eth-infinitism/bundler/tree/main).
@@ -55,6 +54,7 @@ The request type is IInitCodeRequest, that is a JSON that contains the owner's a
 
 The reply of this method is a JSON containing the initCode.
 
+
 > ** Note **    
 Right now, using the initCode to create a smart contract wallet within a userOperation doesn't create an Indid account in the database. This feature will be available soon!
 
@@ -65,6 +65,7 @@ A user can interact with this endpoint in order to retrieve the default values f
 The Request contains the chainId (optional as in the initCode endpoint, useful for future multiple chains logic) and the apiKey in the header.
 
 The endpoint sends to the client a reply that is a JSON containing the factory address, the module address, the info about the guardians (same logic as above), the storage type ("shared" or "generalized") and the module type ("enterprise" or "user").
+
 
 ## UserOperation
 
@@ -107,9 +108,6 @@ Request: a JSON containing the wallet address, the new owner's address, the sign
 The request must contain the apiKey in the header because, in order to perform an account recovery, the user must have a certain amount of compute units.
 
 The reply is a JSON containing the hash of the transaction that transferred the contract's ownership.
-
-
-
 
 
 
