@@ -1,12 +1,12 @@
-# Send an userOperation
+# Send a userOperation
 
-Category: User Operations
+Category: `User Operations`
 
 Description: Sends an ERC-4337 userOperation to the bundler, that will execute it (the request type is IUserOperation, a JSON containing the fields in body params)
 
-Type: POST
+Type: `POST`
 
-URL: https://api.dev.indid.io/send-op
+URL: /send-op
 
 ### Body Params (IUserOperation)
 

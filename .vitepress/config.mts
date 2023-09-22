@@ -9,8 +9,9 @@ const sidebars = {
         text: "Getting Started",
         link: "/getting-started/gettingStarted",
       },
-      { text: "Details of Indid API",
-        link: "/getting-started/indidAPIDetails"
+      {
+        text: "Details of Indid API",
+        link: "/getting-started/indidAPIDetails",
       },
     ],
   },
@@ -18,6 +19,10 @@ const sidebars = {
     text: "API",
     collapsed: true,
     items: [
+      {
+        text: "Endpoints Details",
+        link: "/api/endpointsDetailsIntro",
+      },
       {
         text: "Retrieve SDK Defaults",
         link: "/api/getSDKDefaults",
@@ -28,22 +33,49 @@ const sidebars = {
       },
       {
         text: "Get InitCode",
-        link: "api/getInitCode"
+        link: "/api/getInitCode",
       },
       {
         text: "Send UserOp",
-        link: "api/sendUserOp"
+        link: "/api/sendUserOp",
       },
       {
         text: "Get UserOp status",
-        link: "api/getOpStatus"
+        link: "/api/getOpStatus",
       },
       {
         text: "Sign UserOp for Paymaster Sponsorship",
-        link: "api/signPaymasterOp"
-      }
+        link: "/api/signPaymasterOp",
+      },
+      {
+        text: "Recover account",
+        link: "/api/recoverAccount",
+      },
     ],
   },
+  sdk: {
+    text: "SDK",
+    collapsed: true,
+    items: [ 
+      {
+        text: "Getting Started",
+        link: "/sdk/gettingStarted",
+      },
+      {
+        text: "Builder",
+        link: "/sdk/builder",
+      },
+      {
+        text: "Core SDK",
+        link: "/sdk/coreSdk",
+      },
+      {
+        text: "Admin SDK",
+        link: "/sdk/adminSdk",
+      },
+
+    ]
+  }
 };
 
 // https://vitepress.dev/reference/site-config
@@ -58,7 +90,8 @@ export default defineConfig({
       { text: "Examples", link: "/markdown-examples" },
     ],
     sidebar: {
-      "/": [sidebars["gettingStarted"], sidebars["api"]],
+      "/": [sidebars["gettingStarted"], sidebars["api"], sidebars["sdk"]],
+      
     },
     socialLinks: [
       {
