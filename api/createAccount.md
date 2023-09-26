@@ -12,12 +12,12 @@ URL: /create-account
 
 | Name | Type | Required? | Description |
 | --- | --- | --- | --- |
-| owner | string | yes |  |
-| factoryAddress | string | no |  |
-| _guardians | string[] | no |  |
-| _guardianId | string | no |  |
-| _module | string | no |  |
-| salt | number | no |  |
+| owner | string | yes | The address of the smart contract wallet owner |
+| factoryAddress | string | no | The address of the smart contract wallet factory |
+| _guardians | string[] | no | The guardians array in case of generalized account |
+| _guardianId | string | no | The guardians structId in case of shared storage account |
+| _module | string | no | The address of the module |
+| salt | number | no | The salt for counterfactual address generation |
 
 ### Responses
 

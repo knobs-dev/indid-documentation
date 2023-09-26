@@ -13,7 +13,7 @@ URL: /op-status
 
 | Name | Type | Required? | Description |
 | --- | --- | --- | --- |
-| opHash | string | yes |  |
+| opHash | string | yes | The hash of the userOperation to be checked |
 
 ### Responses
 

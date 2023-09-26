@@ -12,12 +12,12 @@ URL: /recovery-account
 
 | Name | Type | Required? | Description |
 | --- | --- | --- | --- |
-| walletAddress | string | yes |  |
-| newOwner | string | yes |  |
-| signature | string | yes |  |
-| nonce | number | yes |  |
-| deadline | number | yes |  |
-| moduleAddress | string | no |  |
+| walletAddress | string | yes | The smart contract wallet to recover |
+| newOwner | string | yes | The address of the new owner of the smart contract wallet |
+| signature | string | yes | The signature of all the guardians |
+| nonce | number | yes | The internal nonce of the module, mandatory because it is not sequential |
+| deadline | number | yes | The deadline of the request |
+| moduleAddress | string | no | The address of the module on which the recovery method has to be called |
 | params | any | no |  |
 
 ### Responses
