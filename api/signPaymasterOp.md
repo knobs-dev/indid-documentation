@@ -22,13 +22,14 @@ URL: /sign-paymaster-op
 | maxFeePerGas | bigNumberish | yes | The maximum fee per gas unit that can be paid by the userOperation |
 | maxPriorityFeePerGas | bigNumberish | yes | The maximum priority fee per gas unit that can be paid by the userOperation |
 
+### Error Handling
 
-### Responses
-
-|  | Response Body |
+| HTTP Status | Meaning |
 | --- | --- |
-| 200 |  |
-| 400 |  |
+| 200 | OK |
+| 403 | Unauthorized userOperation - validation failure |
+| 512 | Internal server error while signing userOperation |
+| 515 | Error during partial userOp parsing. Wrong input format for the partial userOp |
 
 ## Code Examples
 

@@ -20,12 +20,13 @@ URL: /initCode
 | salt | number | no | The salt for initCode generation |
 | chainId | bigNumberish | no | The chainId for cross-chain handling |
 
-### Responses
+### Error Handling
 
-|  | Response Body |
+| HTTP Status | Meaning |
 | --- | --- |
-| 200 |  |
-| 400 |  |
+| 200 | OK |
+| 512 | Internal server error while retrieving initCode |
+| 515 | Error during initCodeRequest parsing. Wrong input format for the initCodeRequest |
 
 ## Code Examples
 

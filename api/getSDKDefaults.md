@@ -10,13 +10,12 @@ URL: /get-sdk-defaults
 
 ### Body Params
 
+### Error Handling
 
-### Responses
-
-|  | Response Body |
+| HTTP Status | Meaning |
 | --- | --- |
-| 200 |  |
-| 400 |  |
+| 200 | OK |
+| 512 | Internal server error while getting sdk defaults |
 
 ## Code Examples
 

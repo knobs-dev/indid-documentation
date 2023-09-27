@@ -19,12 +19,13 @@ URL: /create-account
 | _module | string | no | The address of the module |
 | salt | number | no | The salt for counterfactual address generation |
 
-### Responses
+### Error Handling
 
-|  | Response Body |
+| HTTP Status | Meaning |
 | --- | --- |
-| 200 |  |
-| 400 |  |
+| 200 | OK |
+| 512 | Internal server error while creating account |
+| 515 | Error during createAccountRequest parsing. Wrong input format for the createAccountRequest |
 
 ## Code Examples
 

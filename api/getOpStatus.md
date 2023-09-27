@@ -15,12 +15,15 @@ URL: /op-status
 | --- | --- | --- | --- |
 | opHash | string | yes | The hash of the userOperation to be checked |
 
-### Responses
 
-|  | Response Body |
+### Error Handling
+
+| HTTP Status | Meaning |
 | --- | --- |
-| 200 |  |
-| 400 |  |
+| 200 | OK |
+| 204 | userOperation for the requested opHash not found on-chain -> null |
+| 512 | Internal server error while retrieving op status |
+| 516 | userOperation not found in the DB |
 
 ## Code Examples
 

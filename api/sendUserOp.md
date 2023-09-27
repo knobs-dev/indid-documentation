@@ -27,12 +27,14 @@ URL: /send-op
 
 
 
-### Responses
+### Error Handling
 
-|  | Response Body |
+| HTTP Status | Meaning |
 | --- | --- |
-| 200 |  |
-| 400 |  |
+| 200 | OK |
+| 512 | Internal server error while sending userOperation
+| 515 | Error during send-userOp request parsing. Wrong input format for the userOperation |
+| 516 | Error received from the bundler while handling the userOperation
 
 ## Code Examples
 
