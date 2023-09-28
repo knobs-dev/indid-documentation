@@ -24,9 +24,6 @@ Indid service is active on these networks:
 | Ethereum | coming soon... | coming soon... |
 | Linea | coming soon... | coming soon... |
 
----
-
-### Account Recovery - Guardians
 
 ---
 
