@@ -26,6 +26,10 @@ To understand in depth the benefits offered by Account Abstraction, to have a mo
 
 # Project types on Indid
 
+Before starting to use the API or the SDK, it is necessary to create an account on Indid platform. After having created the account, a user must create a project.
+
+The user can choose among different combinations of projects, based on the way he wants to manage the security of his smart contract wallet.
+
 ## Guardians
 
 Indid uses the concept of guardians to protect the most delicate operations of the service.
