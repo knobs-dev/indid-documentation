@@ -12,7 +12,7 @@ hero:
       link: /getting-started/gettingStarted
     - theme: alt
       text: API Examples
-      link: /api-examples
+      link: /sdk/gettingStarted
 
 # features:
 #   - title: Simple

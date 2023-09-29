@@ -56,7 +56,7 @@ const sidebars = {
   sdk: {
     text: "SDK",
     collapsed: true,
-    items: [ 
+    items: [
       {
         text: "Getting Started",
         link: "/sdk/gettingStarted",
@@ -73,9 +73,8 @@ const sidebars = {
         text: "Admin SDK",
         link: "/sdk/adminSdk",
       },
-
-    ]
-  }
+    ],
+  },
 };
 
 // https://vitepress.dev/reference/site-config
@@ -87,11 +86,10 @@ export default defineConfig({
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: "Home", link: "/" },
-      { text: "Examples", link: "/markdown-examples" },
+      // { text: "Examples", link: "/markdown-examples" },
     ],
     sidebar: {
       "/": [sidebars["gettingStarted"], sidebars["api"], sidebars["sdk"]],
-      
     },
     socialLinks: [
       {
