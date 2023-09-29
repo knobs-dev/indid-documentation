@@ -24,6 +24,7 @@ Indid service is active on these networks:
 | Ethereum | coming soon... | coming soon... |
 | Linea | coming soon... | coming soon... |
 
+
 ---
 
 Returning to the endpoints, through them it is possible to perform the operations that concern the creation of an account, the ones that are responsible for the recovery of an account and the ones that deal with User Operations.

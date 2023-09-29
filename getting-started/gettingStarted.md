@@ -21,7 +21,69 @@ Aggregators: optional smart contracts that are used to approve an aggregate sign
 
 ## More about Account Abstraction
 
-To understand in depth the benefits offered by Account Abstraction, to have a more complete overview of how it works, and further details, reading this article written by the Alchemy team is recommended. (https://www.alchemy.com/blog/account-abstraction)
+To understand in depth the benefits offered by Account Abstraction, to have a more complete overview of how it works, and further details, reading this article written by the Alchemy team is recommended. (https://www.alchemy.com/blog/account-abstraction).
+
+
+# Project types on Indid
+
+## Guardians
+
+Indid uses the concept of guardians to protect the most delicate operations of the service.
+
+In particular, the guardians are wallets that a user chooses as protectors of his wallet. They use multisignature protocols and there is the need of the approval of the majority of the guardians to allow the execution of a "protected" operation.
+
+Indid projects offer the possibility to choose among two account factories, that allow the user to select if he wants to add, manage and remove his personal guardians or if he wants a guardians structure managed by Indid.
+
+The user can also select two types of modules, that give him the chance to choose which operation to protect with the guardians.
+
+Now the details of the factories and the modules are presented.
+
+## Factories
+
+### Shared Storage Factory
+
+With the Shared Storage Factory, the user chooses the possibility to have a guardians structure that is completely managed and made available by Indid.
+
+This factory doesn't allow the user to add or remove guardians.
+
+A user "shares" his guardians with other users who selected this type of factory.
+
+This works thanks to a Struct that contains the guardians, that can be added or removed by Indid backend. The users, at the moment of the project creation, are associated to the pointer to this data structure (GuardianId) and every change made by the backend to this structure is reflected on each user's account.
+
+### Generalized Account Factory
+
+Choosing the Generalized Account Factory, a user selects the possibility to manage his own guardians.
+
+In this case the guardians are personal and aren't shared with any other account. 
+
+The data structure here is a guardian array, which can be modified directly by the user through the chance of adding and removing the guardians by himself.
+
+## Modules
+
+### User Module
+
+The modules "protect" the execution of some methods by allowing their execution only with the signature of the majority of the guardians.
+
+In particular, the main operations that User Module protects are:
+- executeRecovery (SecurityManager) that allows the recovery of a smart contract wallet;
+- cancelRecovery (SecurityManager) that is responsible of the deletion of a recovery request;
+- transferOwnership (SecurityManager) to transfer the ownership of a smart contract wallet;
+- upgradeWallet (SecurityManager) to give the possibility to use the upgradeability of the smart contract wallet;
+- multicallWithGuardians (EnterpriseTransactionManager) to handle the sending of the userOperations.
+
+### Enterprise Module
+
+Also the Enterprise Module protects the execution of the same methods of the Users one, but it protects also the methods responsible for the guardians management.
+
+These are:
+
+- addGuardian (SecurityManager) that handles the request of adding a guardian;
+- revokeGuardian (SecurityManager) that handles the request of revoking the guardian role to one of the guardians;
+- cancelGuardianAddition (SecurityManager) that handles the deletion of a request of adding a guardian;
+- cancelGuardianRevokation (SecurityManager) that handles the deletion of a request of revoking a guardian role.
+
+
+
 
 
 

@@ -12,20 +12,21 @@ URL: /initCode
 
 | Name | Type | Required? | Description |
 | --- | --- | --- | --- |
-| owner | string | yes |  |
-| factoryAddress | string | no |  |
-| guardiansHash | string | no |  |
-| guardianId | string | no |  |
-| moduleAddress | string | no |  |
-| salt | number | no |  |
-| chainId | bigNumberish | no |  |
+| owner | string | yes | The address of the smart contract wallet owner |
+| factoryAddress | string | no | The address of the smart contract wallet factory |
+| guardiansHash | string | no | The hash of the guardians array in case of generalized account |
+| guardianId | string | no | The guardians structId in case of shared storage account |
+| moduleAddress | string | no | The address of the module |
+| salt | number | no | The salt for initCode generation |
+| chainId | bigNumberish | no | The chainId for cross-chain handling |
 
-### Responses
+### Error Handling
 
-|  | Response Body |
+| HTTP Status | Meaning |
 | --- | --- |
-| 200 |  |
-| 400 |  |
+| 200 | OK |
+| 512 | Internal server error while retrieving initCode |
+| 515 | Error during initCodeRequest parsing. Wrong input format for the initCodeRequest |
 
 ## Code Examples
 
