@@ -5,8 +5,9 @@ Software development kit that facilitates the interaction with Indid infrastruct
 ## init
 
 A method for obtaining an initialized instance of the sdk.
+Throws an error if the provided rpcUrl is invalid or the coreApiKey is not valid.
 
-```tsx
+```ts
 const clientUser = await Client.init(
       rpcUrl: string,
       coreApiKey: string
@@ -17,15 +18,15 @@ const clientUser = await Client.init(
 
 A method for connecting to an already deployed account, this is necessary for preparing and signing user operations. The field opts is only needed when the values set at project creation should be overridden.
 
-```tsx
-await clientUser.connectAccount(
+```ts
+clientUser.connectAccount(
   signer: ethers.Wallet | ethers.providers.JsonRpcSigner,
   accountAddress: string,
   opts?: IConnectAccountOpts
   );
 ```
 
-```tsx
+```ts
 interface IConnectAccountOpts {
   moduleType: string,
   moduleAddress: string,
@@ -39,7 +40,7 @@ A method for getting the address of a yet to be deployed smart contract wallet. 
 
 Returns the address inside an ```IGetCounterfactualAddressResponse```
 
-```tsx
+```ts
 const response = await clientUser.getCounterfactualAddress(
     owner: string,
     salt?: string,
@@ -47,7 +48,7 @@ const response = await clientUser.getCounterfactualAddress(
   );
 ```
 
-```tsx
+```ts
 interface ICreateAccountOpts {
   storageType: string;
   moduleType: string;
@@ -59,7 +60,7 @@ interface ICreateAccountOpts {
   }
   ```
 
-```tsx
+```ts
 interface IGetCounterfactualAddressResponse {
   accountAddress: string;
   error?: string;
@@ -72,7 +73,7 @@ A method for preparing a partial user operation that executes the specified tran
 
 Returns a builder containing the partial user operation.
 
-```tsx
+```ts
 const builder = await clientUser.prepareSendTransactions(
     to: string[],
     value: BigNumberish[],
@@ -87,7 +88,7 @@ A method for preparing a partial user operation that sends the desired amount of
 
 Returns a builder containing the partial user operation.
 
-```tsx
+```ts
 const builder = await clientUser.prepareSendETH(
     recipientAddress: string,
     amount: BigNumberish
@@ -100,7 +101,7 @@ A method for preparing a partial user operation that sends the desired amount of
 
 Returns a builder containing the partial user operation.
 
-```tsx
+```ts
 const builder = await clientUser.prepareSendERC20(
     contractAddress: string,
     recipientAddress: string,
@@ -129,7 +130,7 @@ A method for preparing a partial user operation that executes a recovery operati
 
 Returns a builder containing the partial user operation.
 
-```tsx
+```ts
 const builder = await prepareEnterpriseRecoveryOperation(
     accountAddress: string,
     newOwner: string
@@ -140,7 +141,7 @@ const builder = await prepareEnterpriseRecoveryOperation(
 
 A method for signing user operations, it applies the signature on the builder object itself.
 
-```tsx
+```ts
 await clientUser.signUserOperation(
   builder: IUserOperationBuilder
   );
@@ -152,17 +153,30 @@ A method for directing a builder instance to create a User Operation and send it
 
 Returns the User Operation Hash.
 
-```tsx
+```ts
 const userOpHash = await clientUser.sendUserOperation(
   builder: IUserOperationBuilder
+  webhookData?: IWebHookRequest
   );
+```
+
+The tag field is mandatory and represents the specific webhook to be called upon the operation completion.
+Metadata is optional and can be used to pass additional information to the webhook that will be returned with the webhook callback.
+
+```ts
+
+interface IWebHookRequest {
+    tag : string;
+    metadata? : Record<string, unknown>;
+}
+
 ```
 
 ## waitOP
 
 A method for waiting an User Operation Hash returned by sendUserOperation, returns the receipt upon success.
 
-```tsx
+```ts
 await clientUser.waitOP(userOpHash: string);
 ```
 
@@ -170,7 +184,7 @@ await clientUser.waitOP(userOpHash: string);
 
 A method for waiting a backend task ID returned by some sdk functions. sendUserOperation, returns the task outcome upon completion.
 
-```tsx
+```ts
 await clientUser.waitTask(
   taskId: string,
   timeout?: number
