@@ -58,18 +58,22 @@ interface ICreateAccountOpts {
   guardiansHash?: BytesLike;
   guardianStructId?: BytesLike;
   }
-  ```
+```
+
+## getAccountNonce
+
+A method for getting the account nonce.
+
+Returns a BigNumber with the account nonce.
 
 ```ts
-interface IGetCounterfactualAddressResponse {
-  accountAddress: string;
-  error?: string;
-  }
-  ```
+const nonce = await clientUser.getAccountNonce();
+```
 
 ## prepareSendTransaction
 
 A method for preparing a partial user operation that executes the specified transactions. It’s partial because it still needs to be sponsored (optionally) and signed.
+It can be used to send multiple transactions in a single operation, the array positions of the parameters must match. The initCode is optional and can be used to deploy a new smart contract wallet.
 
 Returns a builder containing the partial user operation.
 
@@ -112,6 +116,7 @@ const builder = await clientUser.prepareSendERC20(
 ## prepareSendModuleOperation
 
 A method for preparing a partial user operation that executes specific wallet functions implemented by the main module. It’s partial because it still needs to be sponsored (optionally) and signed.
+The initCode is optional and can be used to deploy a new smart contract wallet.
 
 Returns a builder containing the partial user operation.
 
@@ -150,6 +155,7 @@ await clientUser.signUserOperation(
 ## sendUserOperation
 
 A method for directing a builder instance to create a User Operation and send it to Indid bundler.
+The webhookData is optional and can be used to specify a webhook to be called upon the operation success or failure.
 
 Returns the User Operation Hash.
 
@@ -164,12 +170,20 @@ The tag field is mandatory and represents the specific webhook to be called upon
 Metadata is optional and can be used to pass additional information to the webhook that will be returned with the webhook callback.
 
 ```ts
-
 interface IWebHookRequest {
     tag : string;
     metadata? : Record<string, unknown>;
 }
+```
 
+## getUserOperationHash
+
+A method for getting the User Operation Hash from a builder instance. This can be useful for signing the operation in a different environment.
+
+Returns the User Operation Hash, this needs to be arrayfied before being signed.
+
+```ts
+const userOpHash = getUserOperationHash(builder: IUserOperationBuilder);
 ```
 
 ## waitOP
@@ -182,11 +196,30 @@ await clientUser.waitOP(userOpHash: string);
 
 ## waitTask
 
-A method for waiting a backend task ID returned by some sdk functions. sendUserOperation, returns the task outcome upon completion.
+A method for waiting a backend task ID returned by some sdk functions. sendUserOperation, returns the task outcome. The outcome can be: "PENDING", "EXECUTED", "REVERTED", "UNHANDLED", "FAILED", TIMEOUT = "TIMEOUT".
 
 ```ts
 await clientUser.waitTask(
   taskId: string,
   timeout?: number
 );
+```
+
+## verifyWebhookSignature
+
+A static method for verifying the signature of a webhook callback.
+Returns true if the signature is valid, false otherwise.
+
+```ts
+verifyWebhookSignature(req: IWebHookSignatureRequest);
+```
+
+```ts
+interface IWebHookSignatureRequest {
+  headers: {
+  signature: string;
+  encodedMessage: string;
+  };
+  body: Record<string, unknown>;
+}
 ```

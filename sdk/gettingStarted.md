@@ -54,10 +54,10 @@ const builder = await clientUser.prepareSendTransactions([to],[value],[calldata]
 
 4. Now you can decide if the user should pay for the user operation with their own funds or if they should get sponsored by the admin, if the latter it’s the case there are two options:
 
->4.1. If all the process takes places in the backend you can use the following method to apply the sponsorship directly on the builder object:
+>4.1. If the entire process takes place in the backend you can use the following method to apply the sponsorship directly on the builder object:
 
 ```ts
-await clientAdmin.getUserOpSponsorship(builder);
+await clientAdmin.getUserOperationSponsorship(builder);
 ```
 
 >4.2 Otherwise, if the process takes place on the client side you have to follow these steps:
