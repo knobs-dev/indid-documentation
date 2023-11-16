@@ -30,13 +30,15 @@ Below, there is an example of how the signature is computed:
 
 ```tsx
 import { ethers } from "hardhat";
-import {SignerWithAddress} from "@nomiclabs/hardhat-ethers/signers";
+import { JsonRpcSigner } from "@ethersproject/providers";
+import {Wallet} from "@ethersproject/wallet";
+
 export async function signEIP712Transaction(
   wallet: string,
   module: string,
   calldata: string,
   deadline: number,
-  signers: SignerWithAddress[]
+  signers: Wallet[] | JsonRpcSigner[]
 ): Promise<{ signature: string; nonce: BigInt }> {
     
   
@@ -60,9 +62,38 @@ export async function signEIP712Transaction(
     ],
   };
 
-  const nonce = getRandomBigInt(BigInt("100000000000000000000000000"));
+  
+
+  const ABI = {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_wallet",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "_newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "transferOwnership",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+  }
+
+
+  const iface = new ethers.utils.Interface(ABI);
+
+  const calldata = iface.encodeFunctionData("transferOwnership", [
+    walletAddress,
+    newOwner,
+  ]);
+
+  const nonce = BigInt(ethers.utils.hexlify(ethers.utils.randomBytes(32)));
   let value = {
-    wallet: wallet,
+    wallet: walletAddress,
     data: calldata,
     nonce: nonce,
     deadline: deadline,
@@ -72,7 +103,7 @@ export async function signEIP712Transaction(
 
     await Promise.all(
     signers.sort((a, b) => {
-        return Number(a.address) - Number(b.address)
+        return Number(await a.getAddress()) - Number(await b.getAddress())
     }));
   
   

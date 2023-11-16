@@ -23,6 +23,18 @@ URL: /send-op
 | maxPriorityFeePerGas | bigNumberish | yes | The maximum priority fee per gas unit that can be paid by the userOperation |
 | paymasterAndData | bytesLike | yes | The address of the paymaster address that will sponsor the userOperation and further data required by the paymaster smart contract. This parameter can be left blank if the userOperation doesn't have to be sponsored |
 | signature | bytesLike | yes | The signature of the userOperation |
+| webHookData | IWebHookRequest | no | Data structure with two fields, a tag that represents the endpoint that will be called from the webhook, and an optional metadata that represents a generic object that will be returned by the backend with the webhook call |
+
+### IWebHookRequest detail 
+
+```ts
+
+interface IWebHookRequest {
+    tag : string;
+    metadata? : Record<string, unknown>;
+}
+
+```
 
 
 

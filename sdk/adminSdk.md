@@ -6,7 +6,7 @@ The admin sdk provides all the methods and functionalities of the core sdk, it a
 
 A method for obtaining an initialized instance of the sdk
 
-```tsx
+```ts
 const clientAdmin = await AdminClient.init(
   pcUrl: string,
   adminApiKey: string
@@ -20,15 +20,23 @@ The field opts is only needed when the values set at project creation should be 
 
 Returns the address and the task ID of the deploy transaction inside an ```ICreateAccountResponse```.
 
-```tsx
+```ts
 await clientAdmin.createAccount(
   owner: string,
   salt: string = "0",
+  webhookData?: IWebHookRequest,
   opts?: ICreateAccountOpts
 );
 ```
 
-```tsx
+```ts
+interface IWebHookRequest {
+    tag : string;
+    metadata? : Record<string, unknown>;
+}
+```
+
+```ts
 interface ICreateAccountOpts {
   storageType: string;
   moduleType: string;
@@ -40,7 +48,7 @@ interface ICreateAccountOpts {
 }
 ```
 
-```tsx
+```ts
 interface ICreateAccountResponse {
   accountAddress: string;
   taskId: string;
@@ -55,15 +63,23 @@ The field opts is only needed when the values set at project creation should be 
 
 Returns the address and the task ID of the deploy transaction inside an ```ICreateAccountResponse```. If no signer has been provided it also returns the seed of the newly created signer.
 
-```tsx
+```ts
 await clientAdmin.createAndConnectAccount(
   signer?: ethers.Signer,
   salt: string = "0",
+  webhookData?: IWebHookRequest,
   opts?: ICreateAccountOpts
 );
 ```
 
-```tsx
+```ts
+interface IWebHookRequest {
+    tag : string;
+    metadata? : Record<string, unknown>;
+}
+```
+
+```ts
 interface ICreateAccountOpts {
   storageType: string;
   moduleType: string;
@@ -75,7 +91,7 @@ interface ICreateAccountOpts {
 }
 ```
 
-```tsx
+```ts
 interface ICreateAndConnectAccountResponse {
   accountAddress: string;
   taskId: string;
@@ -90,13 +106,13 @@ A method for getting a User Operation Sponsored, it consumes Computes Units (CU)
 
 It applies the PaymasterAndData field on the builder itself. If only the field is needed it can be retrieved from the ```IUserOpSponsorshipResponse```.
 
-```tsx
+```ts
 await clientAdmin.getUserOpSponsorship(
   builder: IUserOperationBuilder
 );
 ```
 
-```tsx
+```ts
 interface IUserOpSponsorshipResponse {
   paymasterAndData: string;
   error?: string;

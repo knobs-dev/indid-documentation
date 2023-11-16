@@ -18,6 +18,19 @@ URL: /create-account
 | _guardianId | string | no | The guardians structId in case of shared storage account |
 | _module | string | no | The address of the module |
 | salt | number | no | The salt for counterfactual address generation |
+| webHookData | IWebHookRequest | no | Data structure with two fields, a tag that represents the endpoint that will be called from the webhook, and an optional metadata that represents a generic object that will be returned by the backend with the webhook call |
+
+### IWebHookRequest detail 
+
+```ts
+
+interface IWebHookRequest {
+    tag : string;
+    metadata? : Record<string, unknown>;
+}
+
+```
+
 
 ### Error Handling
 
