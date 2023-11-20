@@ -15,15 +15,15 @@ const clientAdmin = await AdminClient.init(
 
 ## createAccount
 
-A method for creating(deploying) a smart contract wallet, requires CUs.
+A method for creating(deploying) a smart contract wallet, requires CUs. The salt defaults to 0 and should be changed only if the same owner wants to deploy multiple smart contract wallets.
 The field opts is only needed when the values set at project creation should be overridden.
 
 Returns the address and the task ID of the deploy transaction inside an ```ICreateAccountResponse```.
 
 ```ts
-await clientAdmin.createAccount(
+const response = await clientAdmin.createAccount(
   owner: string,
-  salt: string = "0",
+  salt?: string,
   webhookData?: IWebHookRequest,
   opts?: ICreateAccountOpts
 );
@@ -59,14 +59,16 @@ interface ICreateAccountResponse {
 ## createAndConnectAccount
 
 A method for creating(deploying) a SCW, requires CUs.
+The salt defaults to 0 and should be changed only if the same owner wants to deploy multiple smart contract wallets.
 The field opts is only needed when the values set at project creation should be overridden.
+It will always wait internally for the deploy transaction to be validated and then connect to the newly created account.
 
 Returns the address and the task ID of the deploy transaction inside an ```ICreateAccountResponse```. If no signer has been provided it also returns the seed of the newly created signer.
 
 ```ts
-await clientAdmin.createAndConnectAccount(
+const response = await clientAdmin.createAndConnectAccount(
   signer?: ethers.Signer,
-  salt: string = "0",
+  salt?: string,
   webhookData?: IWebHookRequest,
   opts?: ICreateAccountOpts
 );
@@ -107,7 +109,7 @@ A method for getting a User Operation Sponsored, it consumes Computes Units (CU)
 It applies the PaymasterAndData field on the builder itself. If only the field is needed it can be retrieved from the ```IUserOpSponsorshipResponse```.
 
 ```ts
-await clientAdmin.getUserOpSponsorship(
+const response = await clientAdmin.getUserOpSponsorship(
   builder: IUserOperationBuilder
 );
 ```
@@ -115,6 +117,34 @@ await clientAdmin.getUserOpSponsorship(
 ```ts
 interface IUserOpSponsorshipResponse {
   paymasterAndData: string;
+  error?: string;
+}
+```
+
+## recoverEnterpriseAccount
+
+A method for changing the owner of an existing smart contract account, it consumes Computes Units (CU).
+
+Returns a taskID inside ```IRecoverAccountResponse```.
+
+```ts
+const response = await clientAdmin.recoverEnterpriseAccount(
+    accountAddress: string,
+    newOwner: string,
+    webhookData?: IWebHookRequest
+  );
+```
+
+```ts
+interface IWebHookRequest {
+    tag : string;
+    metadata? : Record<string, unknown>;
+}
+```
+
+```ts
+interface IRecoverAccountResponse {
+  taskId: string;
   error?: string;
 }
 ```
