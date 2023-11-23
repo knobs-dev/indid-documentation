@@ -12,6 +12,9 @@ hero:
       link: /getting-started/gettingStarted
     - theme: alt
       text: API Examples
+      link: /api/endpointsDetailsIntro
+    - theme: alt
+      text: SDK Examples
       link: /sdk/gettingStarted
 
 # features:
