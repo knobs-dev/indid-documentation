@@ -93,6 +93,6 @@ builder.setPaymasterAndData(paymasterAndData)
 
 ```ts
 await clientUser.signUserOperation(builder);
-const userOpHash = await clientUser.sendUserOperation(builder);
-await clientUser.waitOP(userOpHash);
+const response = await clientUser.sendUserOperation(builder);
+await clientUser.waitOP(response.userOpHash);
 ```

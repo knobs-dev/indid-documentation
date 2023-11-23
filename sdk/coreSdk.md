@@ -120,7 +120,11 @@ interface IGetNonceResponse {
 ## prepareSendTransaction
 
 A method for preparing a partial user operation that executes the specified transactions. It’s partial because it still needs to be sponsored (optionally) and signed.
-It can be used to send multiple transactions in a single operation, the array positions of the parameters must match. The nonceOP field is optional and can be used to override the nonce of the smart contract account. The initCode is optional and can be used to deploy a new smart contract wallet.
+It can be used to send multiple transactions in a single operation, the array positions of the parameters must match.
+The nonceOP field is optional and can be used to override the nonce of the smart contract account. The initCode is optional and can be used to deploy a new smart contract wallet.
+
+Internally the method will try to estimate the gas limit of every transaction, if the estimation fails the prepare will fail with an ethers gas estimation error. The gas limit can be overridden by passing the callGasLimit field in the opts parameter, this will also skip the gas estimation.
+Note: if the gas estimation fails the transaction will probably fail on chain too. All the other gas related fields are optional and can be used to override the default values.
 
 Returns a builder containing the partial user operation.
 
@@ -129,9 +133,20 @@ const builder = await clientUser.prepareSendTransactions(
     to: string[],
     value: BigNumberish[],
     calldata: string[],
-    nonceOP?: string,
-    initCode?: string
+    opts: IUserOperationOptions
   );
+```
+
+```ts
+interface IUserOperationOptions {
+  initCode?: string;
+  nonceOP?: BigNumberish;
+  callGasLimit?: BigNumberish;
+  verificationGasLimit?: BigNumberish
+  preVerificationGas?: BigNumberish;
+  maxFeePerGas?: BigNumberish;
+  maxPriorityFeePerGas?: BigNumberish;
+}
 ```
 
 ## prepareSendETH
