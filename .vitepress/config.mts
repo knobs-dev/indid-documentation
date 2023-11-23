@@ -73,6 +73,10 @@ const sidebars = {
         text: "Admin SDK",
         link: "/sdk/adminSdk",
       },
+      {
+        text: "Ethers Adapters",
+        link: "/sdk/ethersAdapters",
+      }
     ],
   },
 };

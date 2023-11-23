@@ -32,6 +32,10 @@ interface IUserOperation {
 An instance of `UserOperationBuilder` can help build a `UserOperation` that can be passed to the client.
 
 ```tsx
+const builder = new UserOperationBuilder();
+```
+
+```tsx
 interface IUserOperationBuilder {
   // get methods.
   getSender: () => string;
