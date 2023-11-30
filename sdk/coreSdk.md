@@ -278,10 +278,19 @@ interface IGetUserOperationHashResponse {
 
 ## waitOP
 
-A method for waiting an User Operation Hash returned by sendUserOperation, returns the receipt inside an ```IUserOperationReceipt``` upon success.
+A method for waiting an User Operation Hash returned by sendUserOperation, returns the receipt inside an ```IUserOperationReceiptResponse``` upon success.
 
 ```ts
-const response = await clientUser.waitOP(userOpHash: string);
+const response = await clientUser.waitOP(
+  userOpHash: string,
+  timeoutMs?: number);
+```
+
+```ts
+interface IUserOperationReceiptResponse {
+  receipt: IUserOperationReceipt;
+  error?: string;
+}
 ```
 
 ```ts
@@ -310,7 +319,7 @@ A method for waiting a backend task ID returned by some sdk functions. sendUserO
 ```ts
 const response = await clientUser.waitTask(
   taskId: string,
-  timeout?: number
+  timeoutMs?: number
 );
 ```
 
