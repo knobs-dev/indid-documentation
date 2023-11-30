@@ -133,7 +133,7 @@ const builder = await clientUser.prepareSendTransactions(
     to: string[],
     value: BigNumberish[],
     calldata: string[],
-    opts: IUserOperationOptions
+    opts?: IUserOperationOptions
   );
 ```
 
@@ -151,7 +151,7 @@ interface IUserOperationOptions {
 
 ## prepareSendETH
 
-A method for preparing a partial user operation that sends the desired amount of native currency to the recipient. The nonceOP field is optional and can be used to override the nonce of the smart contract account. It’s partial because it still needs to be sponsored (optionally) and signed.
+A method for preparing a partial user operation that sends the desired amount of native currency to the recipient. The nonceOP field is optional and can be used to override the nonce of the smart contract account. The initCode is optional and can be used to deploy a new smart contract wallet. It’s partial because it still needs to be sponsored (optionally) and signed.
 
 Returns a builder containing the partial user operation.
 
@@ -159,13 +159,25 @@ Returns a builder containing the partial user operation.
 const builder = await clientUser.prepareSendETH(
     recipientAddress: string,
     amount: BigNumberish,
-    nonceOP?: string
+    opts?: IUserOperationOptions
   );
+```
+
+```ts
+interface IUserOperationOptions {
+  initCode?: string;
+  nonceOP?: BigNumberish;
+  callGasLimit?: BigNumberish;
+  verificationGasLimit?: BigNumberish
+  preVerificationGas?: BigNumberish;
+  maxFeePerGas?: BigNumberish;
+  maxPriorityFeePerGas?: BigNumberish;
+}
 ```
 
 ## prepareSendERC20
 
-A method for preparing a partial user operation that sends the desired amount of the specified ERC20 to the recipient. It’s partial because it still needs to be sponsored (optionally) and signed.
+A method for preparing a partial user operation that sends the desired amount of the specified ERC20 to the recipient. The nonceOP field is optional and can be used to override the nonce of the smart contract account. The initCode is optional and can be used to deploy a new smart contract wallet. It’s partial because it still needs to be sponsored (optionally) and signed.
 
 Returns a builder containing the partial user operation.
 
@@ -174,13 +186,25 @@ const builder = await clientUser.prepareSendERC20(
     contractAddress: string,
     recipientAddress: string,
     amount: BigNumberish,
-    nonceOP?: string
+    opts?: IUserOperationOptions
   );
+```
+
+```ts
+interface IUserOperationOptions {
+  initCode?: string;
+  nonceOP?: BigNumberish;
+  callGasLimit?: BigNumberish;
+  verificationGasLimit?: BigNumberish
+  preVerificationGas?: BigNumberish;
+  maxFeePerGas?: BigNumberish;
+  maxPriorityFeePerGas?: BigNumberish;
+}
 ```
 
 ## prepareSendModuleOperation
 
-A method for preparing a partial user operation that executes specific wallet functions implemented by the main module. The nonceOP field is optional and can be used to override the nonce of the smart contract account. It’s partial because it still needs to be sponsored (optionally) and signed.
+A method for preparing a partial user operation that executes specific wallet functions implemented by the main module. The nonceOP field is optional and can be used to override the nonce of the smart contract account. The initCode is optional and can be used to deploy a new smart contract wallet. It’s partial because it still needs to be sponsored (optionally) and signed.
 The initCode is optional and can be used to deploy a new smart contract wallet.
 
 Returns a builder containing the partial user operation.
@@ -191,22 +215,46 @@ const builder = await clientUser.prepareSendModuleOperation(
     nonce: string,
     deadline: string,
     signatures: string,
-    nonceOP?: string,
-    initCode?: string
+    opts?: IUserOperationOptions
   );
+```
+
+```ts
+interface IUserOperationOptions {
+  initCode?: string;
+  nonceOP?: BigNumberish;
+  callGasLimit?: BigNumberish;
+  verificationGasLimit?: BigNumberish
+  preVerificationGas?: BigNumberish;
+  maxFeePerGas?: BigNumberish;
+  maxPriorityFeePerGas?: BigNumberish;
+}
 ```
 
 ## prepareEnterpriseRecoveryOperation
 
-A method for preparing a partial user operation that executes a recovery operation. It’s partial because it still needs to be sponsored (optionally) and signed. The connected smart contract wallet should be owned by the enterprise guardian.
+A method for preparing a partial user operation that executes a recovery operation. The nonceOP field is optional and can be used to override the nonce of the smart contract account. The initCode is optional and can be used to deploy a new smart contract wallet. It’s partial because it still needs to be sponsored (optionally) and signed. The connected smart contract wallet should be owned by the enterprise guardian.
 
 Returns a builder containing the partial user operation.
 
 ```ts
 const builder = await prepareEnterpriseRecoveryOperation(
     accountAddress: string,
-    newOwner: string
+    newOwner: string,
+    opts?: IUserOperationOptions
   );
+```
+
+```ts
+interface IUserOperationOptions {
+  initCode?: string;
+  nonceOP?: BigNumberish;
+  callGasLimit?: BigNumberish;
+  verificationGasLimit?: BigNumberish
+  preVerificationGas?: BigNumberish;
+  maxFeePerGas?: BigNumberish;
+  maxPriorityFeePerGas?: BigNumberish;
+}
 ```
 
 ## signUserOperation
