@@ -21,8 +21,8 @@ Indid service is active on these networks:
 | Chain | Mainnet | Testnet |
 | --- | --- | --- |
 | Polygon | :heavy_check_mark: Polygon Mainnet  | :heavy_check_mark: Mumbai |
+| Linea | :heavy_check_mark: Linea Mainnet | :heavy_check_mark: Linea Testnet |
 | Ethereum | coming soon... | coming soon... |
-| Linea | coming soon... | coming soon... |
 
 
 ---
