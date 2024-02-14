@@ -1,8 +1,10 @@
 # Indid Ethers Adapters
+
 If you want to interact with the Indid Admin SDK or Indid Core SDK but you are using wagmi-viem you need to migrate the "Wallet Client" of wagmi-viem into the "Signer" of ethers.js.
 You can do this automatically via indid-ethers-adapters.
 
 ## How does it work?
+
 A “Wallet Client” is an interface used by wagmi-viem that is used to interact with Ethereum Accounts and allows you to perform all wallet actions that require a signature
 
 The “Wallet Client” is not present in ethers.js but there is the “Signer”, which is also an abstraction of an Ethereum account and can be used to perform all those methods where signing a message is required.
@@ -21,6 +23,7 @@ To interact with the Indid Admin SDK or Indid Core SDK you need to use ethers.js
 indid-ethers-adapters, via the useEthersSigner method, does just that.
 
 ## UseEthersSigner()
+
 ```tsx
 export function useEthersSigner({ chainId }: { chainId?: number } = {}): UseEthersSigner  {
   const { data: walletClient, ...rest } = useWalletClient({ chainId })
@@ -31,12 +34,14 @@ export function useEthersSigner({ chainId }: { chainId?: number } = {}): UseEthe
 
   return {data: signer, ...rest}
 }
+
 ```
 UseEthersSigner() is responsible for returns an object of type ```UseEthersSigner``` that contains data representing the signer and other properties.
 
 The signer object can be of type ```providers.JsonRpcSigner``` (type of signer in ethers.js) or ```undefined```; if walletClient exists, the walletClientToSigner() function is called by passing walletClient as a parameter, otherwise it returns ```undefined```.
 
 ## walletClientToSigner()
+
 ```tsx
 export function walletClientToSigner(walletClient: WalletClient): providers.JsonRpcSigner {
   const { account, chain, transport } = walletClient
@@ -50,22 +55,29 @@ export function walletClientToSigner(walletClient: WalletClient): providers.Json
   return signer
 }
 ```
+
 The goal of walletClientToSigner() is to convert the walletClient to an object of type ```providers.JsonRpcSigner``` (type of signer in ethers.js)
 
 ## Importing
+
 The first step is to import the useEthersSigner from indid-ethers-adapters
+
 ```tsx
-import { useEthersSigner } from '@knobs-dev/indid-ethers-adapters'
+import { useEthersSigner } from '@indid/indid-ethers-adapters'
 ```
 
 ## Usage
+
 Once imported, you need to create the signer
+
 ```tsx
 const {data:signer} = useEthersSigner()
 //or
 const signer = useEthersSigner().data
 ```
+
 now you will be able to use the ethers.js signer (with all its methods, e.g. sendTransaction(), signMessage() etc.) instead of the wagmi walletClient.
+
 ```tsx
 if(signer){
   const tx = await signer.sendTransaction({

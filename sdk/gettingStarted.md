@@ -7,7 +7,7 @@ The following steps show how to set up the Indid Core SDK and Indid Admin SDK, d
 >1.1 On the client side we need to create an instance of the core sdk, the core sdk is used to create user operations and send them to the indid backend, it also allows to wait for the user operation result.
 
 ```ts
-import { Client } from "@knobs-dev/indid-core-sdk";
+import { Client } from "@indid/indid-core-sdk";
 const clientUser = await Client.init(
       rpcUrl,
       coreApiKey
@@ -17,7 +17,7 @@ const clientUser = await Client.init(
 >1.2 On the backend side we need to create an instance of the admin sdk, the admin sdk can do everything that the core sdk can do, but it also has admin privileges, it's used to deploy smart contract wallets and to sponsor user operations.
 
 ```ts
-import { AdminClient } from "@knobs-dev/indid-admin-sdk";
+import { AdminClient } from "@indid/indid-admin-sdk";
 const clientAdmin = await AdminClient.init(
       rpcUrl,
       adminApiKey
@@ -67,10 +67,10 @@ await clientAdmin.getUserOperationSponsorship(builder);
 const op = builder.getOp()
 ```
 
->>4.2.2. Your backend will call the api.dev.indid.io/sign-paymaster-op with the op and the indid backend will return the paymasterAndData field, your backend will return to the client the paymasterAndData field.
+>>4.2.2. Your backend will call the api.indid.io/sign-paymaster-op with the op and the indid backend will return the paymasterAndData field, your backend will return to the client the paymasterAndData field.
 
 ```ts
-const paymasterdAndData = await fetch("https://api.dev.indid.io/sign-paymaster-op", {
+const paymasterdAndData = await fetch("https://api.indid.io/sign-paymaster-op", {
   method: "POST",
   headers: {
     "Content-Type": "application/json",
