@@ -121,7 +121,7 @@ interface IGetNonceResponse {
 
 A method for preparing a partial user operation that executes the specified transactions. It’s partial because it still needs to be sponsored (optionally) and signed.
 It can be used to send multiple transactions in a single operation, the array positions of the parameters must match.
-The nonceOP field is optional and can be used to override the nonce of the smart contract account. The initCode is optional and can be used to deploy a new smart contract wallet.
+The nonceOP field is optional and can be used to override the nonce of the smart contract account. The initCode is optional and can be used to deploy a new smart contract wallet. The deadlineSeconds field is optional and can be used to specify the deadline for the operation, if the operation is not included in a block before the deadline the operation will fail. The default is 60 minutes.
 
 Internally the method will try to estimate the gas limit of every transaction, if the estimation fails the prepare will fail with an ethers gas estimation error. The gas limit can be overridden by passing the callGasLimit field in the opts parameter, this will also skip the gas estimation.
 Note: if the gas estimation fails the transaction will probably fail on chain too. All the other gas related fields are optional and can be used to override the default values.
@@ -141,6 +141,7 @@ const builder = await clientUser.prepareSendTransactions(
 interface IUserOperationOptions {
   initCode?: string;
   nonceOP?: BigNumberish;
+  deadlineSeconds?: number;
   callGasLimit?: BigNumberish;
   verificationGasLimit?: BigNumberish
   preVerificationGas?: BigNumberish;
@@ -167,6 +168,7 @@ const builder = await clientUser.prepareSendETH(
 interface IUserOperationOptions {
   initCode?: string;
   nonceOP?: BigNumberish;
+  deadlineSeconds?: number;
   callGasLimit?: BigNumberish;
   verificationGasLimit?: BigNumberish
   preVerificationGas?: BigNumberish;
@@ -194,6 +196,7 @@ const builder = await clientUser.prepareSendERC20(
 interface IUserOperationOptions {
   initCode?: string;
   nonceOP?: BigNumberish;
+  deadlineSeconds?: number;
   callGasLimit?: BigNumberish;
   verificationGasLimit?: BigNumberish
   preVerificationGas?: BigNumberish;
@@ -223,6 +226,7 @@ const builder = await clientUser.prepareSendModuleOperation(
 interface IUserOperationOptions {
   initCode?: string;
   nonceOP?: BigNumberish;
+  deadlineSeconds?: number;
   callGasLimit?: BigNumberish;
   verificationGasLimit?: BigNumberish
   preVerificationGas?: BigNumberish;
@@ -249,6 +253,7 @@ const builder = await prepareEnterpriseRecoveryOperation(
 interface IUserOperationOptions {
   initCode?: string;
   nonceOP?: BigNumberish;
+  deadlineSeconds?: number;
   callGasLimit?: BigNumberish;
   verificationGasLimit?: BigNumberish
   preVerificationGas?: BigNumberish;
@@ -393,11 +398,17 @@ enum TaskUserOperationStatus {
 
 ## verifyWebhookSignature
 
-A static method for verifying the signature of a webhook callback.
+A static method for verifying the signature of a webhook callback, it takes an IWebHookSignatureRequest and an optional verifyingKey. If the verifyingKey is not provided the default key is used.
 Returns a ```boolean```, true if the signature is valid, false otherwise.
 
 ```ts
-const response = verifyWebhookSignature(req: IWebHookSignatureRequest);
+const response = verifyWebhookSignature(
+  req: IWebHookSignatureRequest, 
+  verifyingKey?: string
+  );
+```
+
+```ts
 ```
 
 ```ts
