@@ -378,7 +378,7 @@ const response = await clientUser.waitTask(
 
 ```ts
 interface IWaitTaskResponse {
-  status: TaskUserOperationStatus;
+  operationStatus: TaskUserOperationStatus;
   receipt?: JSON;
   reason?: string;
 }
