@@ -102,7 +102,25 @@ interface IInitCodeResponse {
 
 ## getAccountNonce
 
-A method for getting the deployed smart contract wallet nonce. If a smart contract wallect has been connected the accountAddress field is not needed. Otherwise the returned nonce is the nonce of the specified accountAddress.
+A method for getting the deployed smart contract wallet sequential nonce. If a smart contract wallect has been connected the accountAddress field is not needed. Otherwise the returned nonce is the sequential nonce of the specified accountAddress.
+This method is useful if the user wants to enforce a specific order of user operations, for example, if the user wants to send a user operation that depends on the result of another user operation. To do so the user can override the nonce inside the prepareSendTransaction method with the nonce returned by this method.
+
+Returns a BigNumber with the account nonce inside an ```IGetNonceResponse```.
+
+```ts
+const response = await clientUser.getAccountNonce(accountAddress?: string);
+```
+
+```ts
+interface IGetNonceResponse {
+  nonce: BigNumberish;
+  error?: string;
+}
+```
+
+## getNonSequentialAccountNonce
+
+A method for getting a non sequantial nonce of the deployed smart contract wallet. If a smart contract wallect has been connected the accountAddress field is not needed. Otherwise the returned nonce is the nonce of the specified accountAddress. This is the method called internally by the prepareSendTransaction method.
 
 Returns a BigNumber with the account nonce inside an ```IGetNonceResponse```.
 
@@ -121,7 +139,7 @@ interface IGetNonceResponse {
 
 A method for preparing a partial user operation that executes the specified transactions. It’s partial because it still needs to be sponsored (optionally) and signed.
 It can be used to send multiple transactions in a single operation, the array positions of the parameters must match.
-The nonceOP field is optional and can be used to override the nonce of the smart contract account. The initCode is optional and can be used to deploy a new smart contract wallet. The deadlineSeconds field is optional and can be used to specify the deadline for the operation, if the operation is not included in a block before the deadline the operation will fail. The default is 60 minutes.
+The nonceOP field is optional and can be used to override the nonce of the smart contract account. The initCode is optional and can be used to deploy a new smart contract wallet. The deadlineSeconds field is optional and can be used to specify the deadline for the operation, if the operation is not included in a block before the deadline the operation will fail. The default is 60 minutes. The doNotRevertOnTxFailure field is optional and can be used to specify if the operation should revert if one of the transactions fails. The default is true.
 
 Internally the method will try to estimate the gas limit of every transaction, if the estimation fails the prepare will fail with an ethers gas estimation error. The gas limit can be overridden by passing the callGasLimit field in the opts parameter, this will also skip the gas estimation.
 Note: if the gas estimation fails the transaction will probably fail on chain too. All the other gas related fields are optional and can be used to override the default values.
@@ -141,6 +159,7 @@ const builder = await clientUser.prepareSendTransactions(
 interface IUserOperationOptions {
   initCode?: string;
   nonceOP?: BigNumberish;
+  doNotRevertOnTxFailure?: boolean;
   deadlineSeconds?: number;
   callGasLimit?: BigNumberish;
   verificationGasLimit?: BigNumberish
@@ -168,6 +187,7 @@ const builder = await clientUser.prepareSendETH(
 interface IUserOperationOptions {
   initCode?: string;
   nonceOP?: BigNumberish;
+  doNotRevertOnTxFailure?: boolean;
   deadlineSeconds?: number;
   callGasLimit?: BigNumberish;
   verificationGasLimit?: BigNumberish
@@ -196,6 +216,7 @@ const builder = await clientUser.prepareSendERC20(
 interface IUserOperationOptions {
   initCode?: string;
   nonceOP?: BigNumberish;
+  doNotRevertOnTxFailure?: boolean;
   deadlineSeconds?: number;
   callGasLimit?: BigNumberish;
   verificationGasLimit?: BigNumberish
@@ -226,6 +247,7 @@ const builder = await clientUser.prepareSendModuleOperation(
 interface IUserOperationOptions {
   initCode?: string;
   nonceOP?: BigNumberish;
+  doNotRevertOnTxFailure?: boolean;
   deadlineSeconds?: number;
   callGasLimit?: BigNumberish;
   verificationGasLimit?: BigNumberish
@@ -253,6 +275,7 @@ const builder = await prepareEnterpriseRecoveryOperation(
 interface IUserOperationOptions {
   initCode?: string;
   nonceOP?: BigNumberish;
+  doNotRevertOnTxFailure?: boolean;
   deadlineSeconds?: number;
   callGasLimit?: BigNumberish;
   verificationGasLimit?: BigNumberish

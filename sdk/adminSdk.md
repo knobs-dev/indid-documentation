@@ -148,3 +148,30 @@ interface IRecoverAccountResponse {
   error?: string;
 }
 ```
+
+## sendDelegatedTransactions
+
+A method for sending a batch of delegated transactions.
+
+Returns a taskID inside ```ISendDelegatedTransactionsResponse```.
+
+```ts
+const response = await clientAdmin.sendDelegatedTransactions(
+    transactions: ICall[],
+    opts?: IDelegatedTransactionOptions
+  );
+```
+
+```ts
+interface IDelegatedTransactionOptions {
+    doNotRevertOnTxFailure?: boolean;
+    deadlineSeconds?: number;
+}
+```
+
+```ts
+interface ISendDelegatedTransactionsResponse {
+    taskId: string;
+    error?: string;
+}
+```
