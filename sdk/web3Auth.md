@@ -1,7 +1,6 @@
-# Indid Ethers Adapters
+# Web3Auth
 
-If you want to interact with the Indid Admin SDK or Indid Core SDK but you are using wagmi-viem you need to migrate the "Wallet Client" of wagmi-viem into the "Signer" of ethers.js.
-You can do this automatically via indid-ethers-adapters.
+If you want to use Web3Auth with Indid you can use the following code snippets to bootstrap the social login and signer.
 
 ## Imports
 

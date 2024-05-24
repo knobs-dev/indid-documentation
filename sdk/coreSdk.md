@@ -9,9 +9,9 @@ Throws an error if the provided rpcUrl is invalid or the coreApiKey is not valid
 
 ```ts
 const clientUser = await Client.init(
-      rpcUrl: string,
-      coreApiKey: string,
-      opts?: IClientOpts
+  rpcUrl: string,
+  coreApiKey: string,
+  opts?: IClientOpts
     );
 ```
 

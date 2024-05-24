@@ -8,9 +8,31 @@ A method for obtaining an initialized instance of the sdk
 
 ```ts
 const clientAdmin = await AdminClient.init(
-  pcUrl: string,
+  rpcUrl: string,
   adminApiKey: string
   );
+```
+
+It's possible to pass optional parameters to the init method, such as the entry point, the override bundler rpc url, the override backend url and the log level.
+The log level defaults to NONE, which means no logs will be printed.
+
+```ts
+interface IClientOpts {
+  entryPoint?: string;
+  overrideBundlerRpc?: string;
+  overrideBackendUrl?: string;
+  logLevel?: LogLevel
+}
+```
+
+```ts
+enum LogLevel {
+  NONE,
+  DEBUG,
+  INFO,
+  WARNING,
+  ERROR
+}
 ```
 
 ## createAccount
@@ -151,7 +173,7 @@ interface IRecoverAccountResponse {
 
 ## sendDelegatedTransactions
 
-A method for sending a batch of delegated transactions.
+A method for sending a batch of delegated transactions, requires CUs.
 Returns a taskID inside ```ISendDelegatedTransactionsResponse```.
 
 ```ts
