@@ -10,8 +10,31 @@ Throws an error if the provided rpcUrl is invalid or the coreApiKey is not valid
 ```ts
 const clientUser = await Client.init(
       rpcUrl: string,
-      coreApiKey: string
+      coreApiKey: string,
+      opts?: IClientOpts
     );
+```
+
+It's possible to pass optional parameters to the init method, such as the entry point, the override bundler rpc url, the override backend url and the log level.
+The log level defaults to NONE, which means no logs will be printed.
+
+```ts
+interface IClientOpts {
+  entryPoint?: string;
+  overrideBundlerRpc?: string;
+  overrideBackendUrl?: string;
+  logLevel?: LogLevel
+}
+```
+
+```ts
+enum LogLevel {
+  NONE,
+  DEBUG,
+  INFO,
+  WARNING,
+  ERROR
+}
 ```
 
 ## connectAccount

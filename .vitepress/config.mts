@@ -76,7 +76,11 @@ const sidebars = {
       {
         text: "Ethers Adapters",
         link: "/sdk/ethersAdapters",
-      }
+      },
+      {
+        text: "Social Login",
+        link: "/sdk/web3Auth",
+      },
     ],
   },
 };

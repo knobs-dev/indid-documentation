@@ -152,7 +152,6 @@ interface IRecoverAccountResponse {
 ## sendDelegatedTransactions
 
 A method for sending a batch of delegated transactions.
-
 Returns a taskID inside ```ISendDelegatedTransactionsResponse```.
 
 ```ts
