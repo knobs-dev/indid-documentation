@@ -146,6 +146,7 @@ interface IUserOpSponsorshipResponse {
 ## recoverEnterpriseAccount
 
 A method for changing the owner of an existing smart contract account, it consumes Computes Units (CU).
+GuardianSigner is the signer of the wallet's guardian.
 
 Returns a taskID inside ```IRecoverAccountResponse```.
 
@@ -153,6 +154,7 @@ Returns a taskID inside ```IRecoverAccountResponse```.
 const response = await clientAdmin.recoverEnterpriseAccount(
     accountAddress: string,
     newOwner: string,
+    guardianSigner: ethers.Wallet | ethers.providers.JsonRpcSigner,
     webhookData?: IWebHookRequest
   );
 ```
