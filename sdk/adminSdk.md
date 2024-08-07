@@ -8,9 +8,31 @@ A method for obtaining an initialized instance of the sdk
 
 ```ts
 const clientAdmin = await AdminClient.init(
-  pcUrl: string,
+  rpcUrl: string,
   adminApiKey: string
   );
+```
+
+It's possible to pass optional parameters to the init method, such as the entry point, the override bundler rpc url, the override backend url and the log level.
+The log level defaults to NONE, which means no logs will be printed.
+
+```ts
+interface IClientOpts {
+  entryPoint?: string;
+  overrideBundlerRpc?: string;
+  overrideBackendUrl?: string;
+  logLevel?: LogLevel
+}
+```
+
+```ts
+enum LogLevel {
+  NONE,
+  DEBUG,
+  INFO,
+  WARNING,
+  ERROR
+}
 ```
 
 ## createAccount
@@ -124,6 +146,7 @@ interface IUserOpSponsorshipResponse {
 ## recoverEnterpriseAccount
 
 A method for changing the owner of an existing smart contract account, it consumes Computes Units (CU).
+GuardianSigner is the signer of the wallet's guardian.
 
 Returns a taskID inside ```IRecoverAccountResponse```.
 
@@ -131,6 +154,7 @@ Returns a taskID inside ```IRecoverAccountResponse```.
 const response = await clientAdmin.recoverEnterpriseAccount(
     accountAddress: string,
     newOwner: string,
+    guardianSigner: ethers.Wallet | ethers.providers.JsonRpcSigner,
     webhookData?: IWebHookRequest
   );
 ```
@@ -146,5 +170,31 @@ interface IWebHookRequest {
 interface IRecoverAccountResponse {
   taskId: string;
   error?: string;
+}
+```
+
+## sendDelegatedTransactions
+
+A method for sending a batch of delegated transactions, requires CUs.
+Returns a taskID inside ```ISendDelegatedTransactionsResponse```.
+
+```ts
+const response = await clientAdmin.sendDelegatedTransactions(
+    transactions: ICall[],
+    opts?: IDelegatedTransactionOptions
+  );
+```
+
+```ts
+interface IDelegatedTransactionOptions {
+    doNotRevertOnTxFailure?: boolean;
+    deadlineSeconds?: number;
+}
+```
+
+```ts
+interface ISendDelegatedTransactionsResponse {
+    taskId: string;
+    error?: string;
 }
 ```
