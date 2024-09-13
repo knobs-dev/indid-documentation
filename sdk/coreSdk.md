@@ -5,24 +5,26 @@ Software development kit that facilitates the interaction with Indid infrastruct
 ## init
 
 A method for obtaining an initialized instance of the sdk.
-Throws an error if the provided rpcUrl is invalid or the coreApiKey is not valid.
+Throws an error if the apiKey is not valid.
 
 ```ts
 const clientUser = await Client.init(
-  rpcUrl: string,
-  coreApiKey: string,
-  opts?: IClientOpts
+  config: IClientConfig
     );
 ```
 
+The rpcUrl is required if user operations are needed, if only delegated transactions are needed neither a provider or a chainId are required. If neither a provider or a chainId are provided the sdk will be initialized in read-only mode and the chainId will have to be provided in every delegated transaction function that requires it.
 It's possible to pass optional parameters to the init method, such as the entry point, the override bundler rpc url, the override backend url and the log level.
 The log level defaults to NONE, which means no logs will be printed.
 
 ```ts
-interface IClientOpts {
-  entryPoint?: string;
+interface IClientConfig {
+  apiKey: string;
+  rpcUrl?: string;
+  chainId?: BigNumberish;
   overrideBundlerRpc?: string;
   overrideBackendUrl?: string;
+  overrideEntryPoint?: string;
   logLevel?: LogLevel
 }
 ```
@@ -39,7 +41,7 @@ enum LogLevel {
 
 ## connectAccount
 
-A method for connecting to a smart contract account with the signer of the owner, this is necessary for preparing and signing user operations. The field opts is only needed when the values set at project creation should be overridden.
+A method for connecting to a smart contract account with the signer of the owner, this is necessary for preparing and signing user operations. The field opts is only needed when the values set at project creation should be overridden or if the provider/chainId as not been provided at initialization.
 
 ```ts
 clientUser.connectAccount(
@@ -51,9 +53,11 @@ clientUser.connectAccount(
 
 ```ts
 interface IConnectAccountOpts {
-  moduleType: string,
-  moduleAddress: string,
-  storageType: string,
+  moduleType: string;
+  moduleAddress: string;
+  storageType: string;
+  factoryAddress: string;
+  chainId?: BigNumberish;
 }
 ```
 
