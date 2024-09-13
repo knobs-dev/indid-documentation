@@ -62,6 +62,10 @@ const sidebars = {
         link: "/sdk/gettingStarted",
       },
       {
+        text: "Changes",
+        link: "/sdk/changes",
+      },
+      {
         text: "Builder",
         link: "/sdk/builder",
       },

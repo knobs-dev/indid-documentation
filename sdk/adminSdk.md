@@ -175,7 +175,8 @@ interface IRecoverAccountResponse {
 
 ## sendDelegatedTransactions
 
-A method for sending a batch of delegated transactions, requires CUs.
+A method for sending a batch of delegated transactions, requires CUs. If the provider/chainId are not provided at initialization they chaindId be required in this function. 
+The webhookData is optional and can be used to specify a webhook to be called upon the transactions success or failure.
 Returns a taskID inside ```ISendDelegatedTransactionsResponse```.
 
 ```ts
@@ -187,8 +188,20 @@ const response = await clientAdmin.sendDelegatedTransactions(
 
 ```ts
 interface IDelegatedTransactionOptions {
-    doNotRevertOnTxFailure?: boolean;
-    deadlineSeconds?: number;
+  chainId?: BigNumberish;
+  doNotRevertOnTxFailure?: boolean;
+  deadlineSeconds?: number;
+  webhookData?: IWebHookRequest;
+}
+```
+
+The tag field is mandatory and represents the specific webhook to be called upon the operation completion.
+Metadata is optional and can be used to pass additional information to the webhook that will be returned with the webhook callback.
+
+```ts
+interface IWebHookRequest {
+    tag : string;
+    metadata? : Record<string, unknown>;
 }
 ```
 

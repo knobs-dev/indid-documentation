@@ -6,18 +6,18 @@ Let's start by creating an instance of the core sdk and an instance of the admin
 
 ```ts
 import { Client } from "@indid/indid-core-sdk";
-const clientUser = await Client.init(
-      rpcUrl,
-      coreApiKey
-    );
+const clientUser = await Client.init({
+      rpcUrl: rpcUrl,
+      apiKey: coreApiKey,
+    });
 ```
   
 ```ts
 import { AdminClient } from "@indid/indid-admin-sdk";
-const clientAdmin = await AdminClient.init(
-      rpcUrl,
-      adminApiKey
-    );
+const clientAdmin = await AdminClient.init({
+      rpcUrl: rpcUrl,
+      apiKey: adminApiKey,
+    });
 ```
 
 
