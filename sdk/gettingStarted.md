@@ -107,7 +107,7 @@ const connectResponse = await clientUser.connectAccount(
   addressResponse.accountAddress // The wallet address
 );
 
-if (connectResponse.success) {
+if (!connectResponse.error) {
   console.log("Successfully connected to wallet");
 } else {
   console.error("Failed to connect:", connectResponse.error);
@@ -163,6 +163,12 @@ const transactions = [
 ];
 
 const multiBuilder = await clientUser.prepareSendTransactions(transactions);
+```
+
+Change to:
+
+```ts
+const multiBuilder = await clientUser.prepareSendTransaction(transactions);
 ```
 
 ## Step 5: Sponsor the Transaction (Optional)
