@@ -2,17 +2,17 @@
 
 ## Overview
 
-### What is Indid?
+### What is INDID?
 
-Indid is a Smart Wallet infrastructure that simplifies how developers and users interact with the blockchain. We leverage Account Abstraction (ERC‑4337) to offer a frictionless UX: you build with simple APIs/SDKs while we handle sponsorship, relaying, and wallet operations behind the scenes.
+INDID is a Smart Wallet infrastructure that simplifies how developers and users interact with the blockchain. We leverage Account Abstraction (ERC‑4337) to offer a frictionless UX: you build with simple APIs/SDKs while we handle sponsorship, relaying, and wallet operations behind the scenes.
 
-### Why Indid?
+### Why INDID?
 
 - Complex UX with EOAs and raw transactions
 - Gas management and sponsorship add significant overhead
 - High technical barriers (key management, bundlers, relayers)
 
-Indid provides managed Bundlers and Paymasters, production APIs, and SDKs so you can ship gasless, secure, and user‑friendly web3 apps faster.
+INDID provides managed Bundlers and Paymasters, production APIs, and SDKs so you can ship gasless, secure, and user‑friendly web3 apps faster.
 
 ## Account Abstraction (ERC‑4337)
 
@@ -28,13 +28,13 @@ Smart contract wallets enable policies and programmability:
 - Multi‑signature/guardians and social recovery
 - Batched actions and flexible permissions
 
-### Indid architecture in brief
+### INDID architecture in brief
 
-Indid handles UserOperations for you:
+INDID handles UserOperations for you:
 
 - Your app creates a userOperation
-- Indid Paymaster sponsors it when authorized
-- Indid Bundler forwards it to the network’s EntryPoint
+- INDID Paymaster sponsors it when authorized
+- INDID Bundler forwards it to the network’s EntryPoint
 - The EntryPoint executes against the user’s Smart Wallet
 
 ### Use cases
@@ -45,7 +45,7 @@ Indid handles UserOperations for you:
 
 ### High‑level architecture
 
-At a glance: Client App → Indid API → (Worker) → Bundler/Paymaster → EntryPoint → Smart Wallet. Optionally, webhooks can notify your backend about state changes.
+At a glance: Client App → INDID API → (Worker) → Bundler/Paymaster → EntryPoint → Smart Wallet. Optionally, webhooks can notify your backend about state changes.
 
 ## Supported Networks
 
@@ -56,4 +56,4 @@ At a glance: Client App → Indid API → (Worker) → Bundler/Paymaster → Ent
 1. Create your account and first project in the Dashboard.
 2. Get your API Key.
 3. Configure your environment (use our SDK or call the REST APIs directly).
-4. Send your first User Operation: submit a sponsored (gasless) operation via Indid.
+4. Send your first User Operation: submit a sponsored (gasless) operation via INDID.

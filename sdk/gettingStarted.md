@@ -1,6 +1,6 @@
 # Getting Started
 
-This guide will walk you through the basic steps of integrating with Indid SDKs to create and interact with smart contract wallets using ERC-4337 account abstraction. You'll learn how to:
+This guide will walk you through the basic steps of integrating with INDID SDKs to create and interact with smart contract wallets using ERC-4337 account abstraction. You'll learn how to:
 
 1. Initialize both Core and Admin SDKs
 2. Create a smart contract wallet
@@ -11,7 +11,7 @@ This guide will walk you through the basic steps of integrating with Indid SDKs 
 
 ## Prerequisites
 
-- API keys for both Core and Admin SDKs (obtain from [Indid Dashboard](https://dashboard.indid.io))
+- API keys for both Core and Admin SDKs (obtain from [INDID Dashboard](https://dashboard.indid.io))
 - Basic understanding of Ethereum and smart contracts
 
 ## Installation
@@ -215,7 +215,7 @@ multiBuilder.setPaymasterAndData(paymasterAndData);
 app.post('/sponsor', async (req, res) => {
   const { userOp } = req.body;
   
-  // Call Indid API for sponsorship
+  // Call INDID API for sponsorship
   const paymasterdAndData = await fetch("https://api.indid.io/sign-paymaster-op", {
   method: "POST",
   headers: {
@@ -266,7 +266,7 @@ You can configure webhook notifications to be called when operations complete:
 const webhookResponse = await clientUser.sendUserOperation(
   multiBuilder,
   {
-    tag: "transfer-complete", // Must be configured in your Indid dashboard
+    tag: "transfer-complete", // Must be configured in your INDID dashboard
     metadata: {
       transferId: "123",
       amount: "0.01",
@@ -351,4 +351,4 @@ Now that you understand the basics, consider exploring:
 
 - [Core SDK Documentation](./coreSdk.md) - For client-side functions
 - [Admin SDK Documentation](./adminSdk.md) - For server-side and administrative functions
-- [Indid Dashboard](https://dashboard.indid.io) - For managing your projects, API keys and webhooks
+- [INDID Dashboard](https://dashboard.indid.io) - For managing your projects, API keys and webhooks

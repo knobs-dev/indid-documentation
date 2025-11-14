@@ -1,4 +1,4 @@
-# Indid Admin SDK
+# INDID Admin SDK
 
 The admin sdk provides all the methods and functionalities of the core sdk, it also provides the following:
 
@@ -39,7 +39,7 @@ enum LogLevel {
 
 ## createAccount
 
-A method for creating(deploying) a smart contract wallet, requires CUs. The salt defaults to 0 and should be changed only if the same owner wants to deploy multiple smart contract wallets.
+A method for creating(deploying) a smart contract wallet, requires Credits. The salt defaults to 0 and should be changed only if the same owner wants to deploy multiple smart contract wallets.
 The field opts is only needed when the values set at project creation should be overridden.
 
 Returns the address and the task ID of the deploy transaction inside an `ICreateAccountResponse`.
@@ -129,7 +129,7 @@ The returned task ID can be used with the `waitTask` method to monitor the deplo
 
 ## createAndConnectAccount
 
-A method for creating(deploying) a SCW, requires CUs.
+A method for creating(deploying) a SCW, requires Credits.
 The salt defaults to 0 and should be changed only if the same owner wants to deploy multiple smart contract wallets.
 The field opts is only needed when the values set at project creation should be overridden.
 It will always wait internally for the deploy transaction to be validated and then connect to the newly created account.
@@ -173,7 +173,7 @@ interface ICreateAndConnectAccountResponse {
 
 ## getUserOpSponsorship
 
-A method for getting a User Operation Sponsored, it consumes Computes Units (CU).
+A method for getting a User Operation Sponsored, it consumes Credits.
 
 It applies the PaymasterAndData field on the builder itself. If only the field is needed it can be retrieved from the `IUserOpSponsorshipResponse`.
 
@@ -220,7 +220,7 @@ Note that the sponsorship is automatically applied to the builder object. The op
 
 ## recoverEnterpriseAccount
 
-A method for changing the owner of an existing smart contract account, it consumes Computes Units (CU).
+A method for changing the owner of an existing smart contract account, it consumes Credits.
 GuardianSigner is the signer of the wallet's guardian.
 
 Returns a taskID inside `IRecoverAccountResponse`.
@@ -296,7 +296,7 @@ The returned task ID can be used with the `waitTask` method to monitor the recov
 
 ## sendDelegatedTransactions
 
-A method for sending a batch of delegated transactions, requires CUs. If the provider/chainId are not provided at initialization they chaindId be required in this function.
+A method for sending a batch of delegated transactions, requires Credits. If the provider/chainId are not provided at initialization they chaindId be required in this function.
 The webhookData is optional and can be used to specify a webhook to be called upon the transactions success or failure.
 Returns a taskID inside `ISendDelegatedTransactionsResponse`.
 
@@ -394,7 +394,7 @@ const result = await clientAdmin.waitTask(response.taskId);
 
 ## sendPreparedDelegatedTransactions
 
-A method for sending a previously prepared delegated transaction to the Indid backend. This method executes transactions that have been signed by the account owner but are submitted through a delegated sender.
+A method for sending a previously prepared delegated transaction to the INDID backend. This method executes transactions that have been signed by the account owner but are submitted through a delegated sender.
 
 ```ts
 const response = await clientAdmin.sendPreparedDelegatedTransactions(

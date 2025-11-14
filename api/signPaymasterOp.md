@@ -2,7 +2,7 @@
 
 Category: `User Operations`
 
-Description: This endpoint streamlines gasless transactions by completing a partial ERC-4337 userOperation (missing `paymasterAndData` and `signature`). The Indid backend validates that the Paymaster is authorized to sponsor the operation, signs the userOperation by adding the Paymaster data, and locks the maximum estimated CU amount from the user's credit (with a refund if the actual cost is lower). It returns the userOperation with the signed `paymasterAndData`, ready to be forwarded to the Bundler so your app can pay gas fees on behalf of the end user.
+Description: This endpoint streamlines gasless transactions by completing a partial ERC-4337 userOperation (missing `paymasterAndData` and `signature`). The INDID backend validates that the Paymaster is authorized to sponsor the operation, signs the userOperation by adding the Paymaster data, and locks the maximum estimated CU amount from the user's credit (with a refund if the actual cost is lower). It returns the userOperation with the signed `paymasterAndData`, ready to be forwarded to the Bundler so your app can pay gas fees on behalf of the end user.
 
 Type: `POST`
 

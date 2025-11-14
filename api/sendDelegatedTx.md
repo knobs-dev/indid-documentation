@@ -50,7 +50,7 @@ type SendDelegatedTxResponse = {
 | ----------- | ----------------------------------------------------------------------- |
 | 200         | Delegated transaction sent successfully                                 |
 | 512         | Internal server error while sending the delegated transaction           |
-| 513         | Insufficient compute units to process the request                       |
+| 513         | Insufficient Credits to process the request                             |
 | 515         | Validation error: wrong input format for the delegated transaction data |
 
 ## Code Examples

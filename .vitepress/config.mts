@@ -110,8 +110,11 @@ const sidebars = {
         link: "/sdk/ethersAdapters",
       },
       {
+        // TODO: Is still working? If not, remove it
+        /* {
         text: "Social Login",
         link: "/sdk/web3Auth",
+      }, */
       },
     ],
   },
@@ -171,14 +174,15 @@ const sidebars = {
         text: "Contact us",
         link: "/support/contact-us",
       },
-      {
+      // TODO: Work in progress
+      /* {   {
         text: "Community",
         link: "/support/community",
       },
       {
         text: "Troubleshooting",
         link: "/support/troubleshooting",
-      },
+      },*/
     ],
   },
 };
@@ -195,8 +199,9 @@ export default defineConfig({
         sidebars["pricing"],
         sidebars["api"],
         sidebars["sdk"],
-        sidebars["howToGuides"],
-        sidebars["resources"],
+        // TODO: Work in progress
+        //sidebars["howToGuides"],
+        //sidebars["resources"],
         sidebars["support"],
       ],
     },

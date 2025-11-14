@@ -7,7 +7,7 @@ The base URL for all API requests is: [https://api.indid.io](https://api.indid.i
 ## Technical Requirements
 
 - HTTPS is required for all requests.
-- The Indid API follows RESTful conventions.
+- The INDID API follows RESTful conventions.
 - Operations are performed via `GET` and `POST` requests.
 - Request and response bodies are encoded as JSON.
 

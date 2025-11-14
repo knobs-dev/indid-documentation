@@ -1,6 +1,6 @@
-# Indid Core SDK
+# INDID Core SDK
 
-Software development kit that facilitates the interaction with Indid infrastructure.
+Software development kit that facilitates the interaction with INDID infrastructure.
 
 ## init
 
@@ -45,7 +45,7 @@ enum LogLevel {
 
 Takes the following parameters in the config object:
 
-- `apiKey`: The API key for authentication with Indid services
+- `apiKey`: The API key for authentication with INDID services
 - `rpcUrl` (optional): The RPC URL for connecting to the blockchain. Required if user operations are needed
 - `chainId` (optional): The blockchain network identifier
 - `overrideBundlerRpc` (optional): Custom URL to override the default bundler RPC
@@ -55,7 +55,7 @@ Takes the following parameters in the config object:
 
 ### Returns
 
-Returns an initialized Client instance that can be used to interact with the Indid infrastructure.
+Returns an initialized Client instance that can be used to interact with the INDID infrastructure.
 
 ### Example Usage
 
@@ -1039,7 +1039,7 @@ const userOp = await clientUser.buildUserOperation(builder);
 
 ## sendUserOperation
 
-A method for directing a builder instance to create a User Operation and send it to Indid bundler.
+A method for directing a builder instance to create a User Operation and send it to INDID bundler.
 The webhookData is optional and can be used to specify a webhook to be called upon the operation success or failure.
 Returns the User Operation Hash and a Task Id inside an `ISendUserOpResponse`.
 

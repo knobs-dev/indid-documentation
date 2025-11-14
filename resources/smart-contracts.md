@@ -1,5 +1,5 @@
 ---
-title: Indid Smart Contracts (verified & audited)
+title: INDID Smart Contracts (verified & audited)
 ---
 
-# Indid Smart Contracts (verified & audited)
+# INDID Smart Contracts (verified & audited)

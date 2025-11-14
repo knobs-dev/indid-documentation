@@ -36,7 +36,7 @@ type NotarizeResponse = {
 | HTTP Status | Meaning                           |
 | ----------- | --------------------------------- |
 | 200         | Notarization created successfully |
-| 513         | Insufficient compute units        |
+| 513         | Insufficient Credits              |
 | 515         | Parameter validation error        |
 | 512         | Internal server error             |
 
