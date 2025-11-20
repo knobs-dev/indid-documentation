@@ -49,7 +49,7 @@ At a glance: Client App → INDID API → (Worker) → Bundler/Paymaster → Ent
 
 ## Supported Networks
 
-- Polygon (currently supported)
+INDID currently supports **Polygon** and **Base** networks (both mainnet and testnet). For detailed network information, chain IDs, and configuration, see the [Supported Networks](./supported-networks.md) documentation.
 
 ## Quickstart Guide (≈5 minutes)
 

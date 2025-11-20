@@ -4,11 +4,42 @@ Follow these steps to complete your first sponsored (gasless) User Operation in 
 
 ## 1) Create account and project
 
-Create your account and first project in the INDID Dashboard.
+### Create Your Account
+
+1. Navigate to the [INDID Dashboard](https://app.indid.io/sign-in)
+2. Register with your email and password
+3. Verify your email address by clicking the verification link sent to your inbox
+
+### Create Your Project
+
+Once logged in to the Dashboard:
+
+1. **Select the Chain**: Choose your target blockchain network from the network selector
+2. **Create Project**: Click the "Create Project" button to open the project creation modal
+3. **Configure Project**:
+   - Enter a project name
+   - Add a description (optional)
+   - Click "Create" to finalize
+
+### Project Dashboard
+
+After creating your project, you can access the project dashboard.
 
 ## 2) Get your API Key
 
-You will use it to authenticate your requests.
+To retrieve your API keys for SDK integration:
+
+1. **Open your project** from the Dashboard
+2. **Navigate to "API keys"** from the sidebar menu
+3. **Manage your API keys**:
+   - View your Core API Key and Admin API Key
+   - Copy API keys to use in your application
+   - Regenerate API keys if needed (regeneration invalidates the previous key)
+
+You'll need both API keys:
+
+- **Core API Key**: Used for client-side operations with the Core SDK
+- **Admin API Key**: Used for server-side operations with the Admin SDK (keep this secure and never expose it in client-side code)
 
 ## 3) Send your first User Operation
 
