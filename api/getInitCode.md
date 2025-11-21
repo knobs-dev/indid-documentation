@@ -2,31 +2,44 @@
 
 Category: `Create Account`
 
-Description: Returns the initCode, useful for an account creation inside an userOperation. The request has a JSON as query param (IInitCodeRequest, that contains the parameters below)
+Description: Provides the initCode, an essential value for initializing and creating a new account within a userOperation.
 
 Type: `GET`
 
 URL: /initCode
 
+### Authentication
+
+Public endpoint — no authentication required.
+
 ### Query Params (IInitCodeRequest)
 
-| Name | Type | Required? | Description |
-| --- | --- | --- | --- |
-| owner | string | yes | The address of the smart contract wallet owner |
-| factoryAddress | string | no | The address of the smart contract wallet factory |
-| guardiansHash | string | no | The hash of the guardians array in case of generalized account |
-| guardianId | string | no | The guardians structId in case of shared storage account |
-| moduleAddress | string | no | The address of the module |
-| salt | number | no | The salt for initCode generation |
-| chainId | bigNumberish | no | The chainId for cross-chain handling |
+| Name           | Type            | Description                                        | Required |
+| -------------- | --------------- | -------------------------------------------------- | -------- |
+| factoryAddress | string          | Factory contract address                           | ✅       |
+| owner          | IWalletOwner    | The wallet owner                                   | ✅       |
+| guardians      | IndidGuardian[] | Array of associated guardians                      | ✅       |
+| guardianBytes  | string          | Guardians data encoded as bytes                    | ✅       |
+| moduleAddress  | string          | Module address                                     | ✅       |
+| salt           | BigNumberish    | Salt value                                         | ✅       |
+| chainId        | ChainId         | Chain ID                                           | ✅       |
+| guardianId     | string          | Optional guardian ID (for shared storage accounts) |          |
+
+### Response
+
+```ts
+type GetInitCodeResponse = {
+  initCode: string; // The initialization code required for account creation
+};
+```
 
 ### Error Handling
 
-| HTTP Status | Meaning |
-| --- | --- |
-| 200 | OK |
-| 512 | Internal server error while retrieving initCode |
-| 515 | Error during initCodeRequest parsing. Wrong input format for the initCodeRequest |
+| HTTP Status | Meaning                                                   |
+| ----------- | --------------------------------------------------------- |
+| 200         | InitCode retrieved successfully                           |
+| 512         | Internal server error while retrieving initCode           |
+| 515         | Parsing error: wrong input format for the initCodeRequest |
 
 ## Code Examples
 
@@ -39,19 +52,16 @@ npm i node-fetch
 ### Request
 
 ```tsx
-params: IInitCodeRequest
+params: IInitCodeRequest;
 
-const url = `${this.backendUrl}/initCode?` + new URLSearchParams({...(params as any)})
+const url =
+  `${this.backendUrl}/initCode?` + new URLSearchParams({ ...(params as any) });
 let config = {
   method: "get",
   maxBodyLength: Infinity,
-  headers: {
-    "Content-Type": "application/json",
-    Authorization: `Bearer ${this.apiKey}`,
-  }
+  headers: {},
 };
 
-const response = await fetch(url, config)
+const response = await fetch(url, config);
 const JSONResponse = await response.json();
-
 ```

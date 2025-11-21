@@ -1,6 +1,6 @@
-# Indid Core SDK
+# INDID Core SDK
 
-Software development kit that facilitates the interaction with Indid infrastructure.
+Software development kit that facilitates the interaction with INDID infrastructure.
 
 ## init
 
@@ -27,7 +27,7 @@ interface IClientConfig {
   overrideBundlerRpc?: string;
   overrideBackendUrl?: string;
   overrideEntryPoint?: string;
-  logLevel?: LogLevel
+  logLevel?: LogLevel;
 }
 ```
 
@@ -37,14 +37,15 @@ enum LogLevel {
   DEBUG,
   INFO,
   WARNING,
-  ERROR
+  ERROR,
 }
 ```
 
 ### Parameters
 
 Takes the following parameters in the config object:
-- `apiKey`: The API key for authentication with Indid services
+
+- `apiKey`: The API key for authentication with INDID services
 - `rpcUrl` (optional): The RPC URL for connecting to the blockchain. Required if user operations are needed
 - `chainId` (optional): The blockchain network identifier
 - `overrideBundlerRpc` (optional): Custom URL to override the default bundler RPC
@@ -54,13 +55,14 @@ Takes the following parameters in the config object:
 
 ### Returns
 
-Returns an initialized Client instance that can be used to interact with the Indid infrastructure.
+Returns an initialized Client instance that can be used to interact with the INDID infrastructure.
 
 ### Example Usage
+
 ```ts
 // Initialize with minimal configuration
 const clientUser = await Client.init({
-  apiKey: "your-api-key-here"
+  apiKey: "your-api-key-here",
 });
 
 // Initialize with custom RPC
@@ -73,10 +75,9 @@ const clientWithCustomRPC = await Client.init({
 const clientWithLogging = await Client.init({
   apiKey: "your-api-key-here",
   rpcUrl: "https://polygon-rpc.com",
-  logLevel: LogLevel.DEBUG
+  logLevel: LogLevel.DEBUG,
 });
 ```
-
 
 ## connectAccount
 
@@ -106,7 +107,6 @@ interface IConnectAccountOpts {
 
 ```ts
 interface IConnectAccountResponse {
-  success: boolean;
   error?: string;
 }
 ```
@@ -114,6 +114,7 @@ interface IConnectAccountResponse {
 ### Parameters
 
 Takes the following parameters:
+
 - `signer`: An `IndidSigner` object representing the signer of the account owner
 - `accountAddress`: The address of the smart contract wallet to connect to
 - `opts` (optional): Configuration options to override default project settings:
@@ -127,11 +128,10 @@ Takes the following parameters:
 
 ### Returns
 
-Returns a promise that resolves to an `IConnectAccountResponse` containing:
-- `success`: A boolean indicating whether the connection was successful
-- `error`: Optional error message if the connection fails
+Returns a promise that resolves to an `IConnectAccountResponse`.
 
 ### Example Usage
+
 ```ts
 // Create a signer using a private key
 const privateKey = "0x123...";
@@ -155,11 +155,11 @@ const responseWithOpts = await clientUser.connectAccount(
     factoryAddress: "0xabc...",
     accountVersion: "1",
     moduleVersion: "1",
-    chainId: 137
+    chainId: 137,
   }
 );
 
-if (response.success) {
+if (!response.error) {
   console.log("Successfully connected to account");
 } else {
   console.error(`Connection failed: ${response.error}`);
@@ -170,7 +170,7 @@ if (response.success) {
 
 A method for getting the address of a yet to be deployed smart contract wallet. The salt defaults to 0 and should be changed only if the same owner wants to deploy multiple smart contract wallets. The field opts is only needed when the values set at project creation should be overridden.
 
-Returns the address inside an ```IGetCounterfactualAddressResponse```
+Returns the address inside an `IGetCounterfactualAddressResponse`
 
 ```ts
 const response = await clientUser.getCounterfactualAddress(
@@ -184,8 +184,8 @@ const response = await clientUser.getCounterfactualAddress(
 
 ```ts
 interface ICreateAccountOpts {
-  storageType: string;
-  moduleType: string;
+  storageType: "standard" | "shared";
+  moduleType: "user" | "enterprise";
   factoryAddress: string;
   moduleAddress: string;
   guardians: IndidAddress[];
@@ -203,6 +203,7 @@ interface IGetCounterfactualAddressResponse {
 ### Parameters
 
 Takes the following parameters:
+
 - `owners`: An array of `IndidAddress` objects representing the account owners
 - `salt` (optional): A unique value to ensure address uniqueness. Defaults to "0"
 - `opts` (optional): Configuration options to override default project settings:
@@ -216,10 +217,12 @@ Takes the following parameters:
 ### Returns
 
 Returns an object containing:
+
 - `accountAddress`: The counterfactual address of the smart contract wallet
 - `error`: Optional error message if the request fails
 
 ### Example Usage
+
 ```ts
 // Prepare the account parameters
 const ownerPrivateKey = "0x123...";
@@ -227,9 +230,7 @@ const wallet = new ethers.Wallet(ownerPrivateKey);
 const ownerAddress = IndidAddress.fromSecp256k1(wallet.address);
 
 // Get counterfactual address with default settings
-const response = await clientUser.getCounterfactualAddress(
-  [ownerAddress]
-);
+const response = await clientUser.getCounterfactualAddress([ownerAddress]);
 
 console.log(`Counterfactual address: ${response.accountAddress}`);
 
@@ -238,15 +239,13 @@ const responseWithSalt = await clientUser.getCounterfactualAddress(
   [ownerAddress],
   "1" // Salt
 );
-
-
 ```
 
 ## getInitCode
 
 A method for getting the init code for a new smart contract wallet. The field opts is only needed when the values set at project creation should be overridden.
 
-Returns the init code inside an ```IInitCodeResponse```
+Returns the init code inside an `IInitCodeResponse`
 
 ```ts
 const response = await clientUser.getInitCode(
@@ -260,8 +259,8 @@ const response = await clientUser.getInitCode(
 
 ```ts
 interface ICreateAccountOpts {
-  storageType: string;
-  moduleType: string;
+  storageType: "standard" | "shared";
+  moduleType: "user" | "enterprise";
   factoryAddress: string;
   moduleAddress: string;
   guardians: IndidAddress[];
@@ -279,6 +278,7 @@ interface IInitCodeResponse {
 ### Parameters
 
 Takes the following parameters:
+
 - `owners`: An array of `IndidAddress` objects representing the account owners
 - `salt` (optional): A unique value to ensure deployment address uniqueness. Defaults to "0"
 - `opts` (optional): Configuration options to override default project settings:
@@ -292,10 +292,12 @@ Takes the following parameters:
 ### Returns
 
 Returns an object containing:
+
 - `initCode`: The initialization code for the smart contract wallet
 - `error`: Optional error message if the request fails
 
 ### Example Usage
+
 ```ts
 // Prepare the account parameters
 const ownerPrivateKey = "0x123...";
@@ -303,9 +305,7 @@ const wallet = new ethers.Wallet(ownerPrivateKey);
 const ownerAddress = IndidAddress.fromSecp256k1(wallet.address);
 
 // Get init code with default settings
-const response = await clientUser.getInitCode(
-  [ownerAddress]
-);
+const response = await clientUser.getInitCode([ownerAddress]);
 
 console.log(`Init code: ${response.initCode}`);
 
@@ -314,7 +314,7 @@ const builder = await clientUser.prepareSendETH(
   "0x789...", // recipient
   ethers.utils.parseEther("0.1"),
   {
-    initCode: response.initCode // This will deploy the wallet as part of the user operation
+    initCode: response.initCode, // This will deploy the wallet as part of the user operation
   }
 );
 
@@ -324,10 +324,10 @@ const responseWithOpts = await clientUser.getInitCode(
   "1", // Salt
   {
     storageType: "standard",
-    moduleType: "users",
+    moduleType: "user",
     factoryAddress: "0x456...",
     moduleAddress: "0x789...",
-    guardians: []
+    guardians: [],
   }
 );
 ```
@@ -337,7 +337,7 @@ const responseWithOpts = await clientUser.getInitCode(
 A method for getting the deployed smart contract wallet sequential nonce. If a smart contract wallect has been connected the accountAddress field is not needed. Otherwise the returned nonce is the sequential nonce of the specified accountAddress.
 This method is useful if the user wants to enforce a specific order of user operations, for example, if the user wants to send a user operation that depends on the result of another user operation. To do so the user can override the nonce inside the prepareSendTransaction method with the nonce returned by this method.
 
-Returns a BigNumber with the account nonce inside an ```IGetNonceResponse```.
+Returns a BigNumber with the account nonce inside an `IGetNonceResponse`.
 
 ```ts
 const response = await clientUser.getAccountNonce(accountAddress?: string);
@@ -355,15 +355,18 @@ interface IGetNonceResponse {
 ### Parameters
 
 Takes the following parameters:
+
 - `accountAddress` (optional): The address of the smart contract wallet. If not provided, uses the address of the currently connected account
 
 ### Returns
 
 Returns an object containing:
+
 - `nonce`: The sequential nonce value as a BigNumberish
 - `error`: Optional error message if the request fails
 
 ### Example Usage
+
 ```ts
 // Get nonce of the connected account
 const response = await clientUser.getAccountNonce();
@@ -378,7 +381,7 @@ const builder = await clientUser.prepareSendETH(
   "0x789...", // recipient
   ethers.utils.parseEther("0.1"),
   {
-    nonceOP: response.nonce.add(1) // Use next sequential nonce
+    nonceOP: response.nonce.add(1), // Use next sequential nonce
   }
 );
 ```
@@ -387,7 +390,7 @@ const builder = await clientUser.prepareSendETH(
 
 A method for getting a non sequantial nonce of the deployed smart contract wallet. If a smart contract wallect has been connected the accountAddress field is not needed. Otherwise the returned nonce is the nonce of the specified accountAddress. This is the method called internally by the prepareSendTransaction method.
 
-Returns a BigNumber with the account nonce inside an ```IGetNonceResponse```.
+Returns a BigNumber with the account nonce inside an `IGetNonceResponse`.
 
 ```ts
 const response = await clientUser.getNonSequentialAccountNonce(accountAddress?: string);
@@ -405,22 +408,27 @@ interface IGetNonceResponse {
 ### Parameters
 
 Takes the following parameters:
+
 - `accountAddress` (optional): The address of the smart contract wallet. If not provided, uses the address of the currently connected account
 
 ### Returns
 
 Returns an object containing:
+
 - `nonce`: The non-sequential nonce value as a BigNumberish
 - `error`: Optional error message if the request fails
 
 ### Example Usage
+
 ```ts
 // Get non-sequential nonce of the connected account
 const response = await clientUser.getNonSequentialAccountNonce();
 console.log(`Non-sequential nonce: ${response.nonce}`);
 
 // Get non-sequential nonce of a specific account
-const specificAccountResponse = await clientUser.getNonSequentialAccountNonce("0x123...");
+const specificAccountResponse = await clientUser.getNonSequentialAccountNonce(
+  "0x123..."
+);
 console.log(`Account non-sequential nonce: ${specificAccountResponse.nonce}`);
 
 // Use in a transaction preparation
@@ -428,9 +436,25 @@ const builder = await clientUser.prepareSendETH(
   "0x789...", // recipient
   ethers.utils.parseEther("0.1"),
   {
-    nonceOP: response.nonce // Use the non-sequential nonce
+    nonceOP: response.nonce, // Use the non-sequential nonce
   }
 );
+```
+
+## connectProvider
+
+Connects to a blockchain provider using the provided RPC URL. Sets up the entryPoint contract and retrieves the `chainId`.
+
+Throws an error if the connection to the provider fails.
+
+```ts
+await clientUser.connectProvider(rpcUrl: string);
+```
+
+### Example Usage
+
+```ts
+await clientUser.connectProvider("https://polygon-rpc.com");
 ```
 
 ## prepareSendTransaction
@@ -445,7 +469,7 @@ Note: if the gas estimation fails the transaction will probably fail on chain to
 Returns a builder containing the partial user operation.
 
 ```ts
-const builder = await clientUser.prepareSendTransactions(
+const builder = await clientUser.prepareSendTransaction(
     transactions: ICall[],
     opts?: IUserOperationOptions
   );
@@ -468,7 +492,7 @@ interface IUserOperationOptions {
   doNotRevertOnTxFailure?: boolean;
   deadlineSeconds?: number;
   callGasLimit?: BigNumberish;
-  verificationGasLimit?: BigNumberish
+  verificationGasLimit?: BigNumberish;
   preVerificationGas?: BigNumberish;
   maxFeePerGas?: BigNumberish;
   maxPriorityFeePerGas?: BigNumberish;
@@ -478,6 +502,7 @@ interface IUserOperationOptions {
 ### Parameters
 
 Takes the following parameters:
+
 - `transactions`: An array of `ICall` objects, each containing:
   - `to`: The recipient address of the transaction
   - `value`: The amount of native currency to send (in wei)
@@ -498,40 +523,38 @@ Takes the following parameters:
 Returns an `IUserOperationBuilder` containing the partial user operation that can be further processed (signed, sponsored, etc.).
 
 ### Example Usage
+
 ```ts
 // Define transactions to execute
 const transactions = [
   {
     to: "0x123...", // ETH transfer
     value: ethers.utils.parseEther("0.1"),
-    data: "0x" // empty calldata for simple transfers
+    data: "0x", // empty calldata for simple transfers
   },
   {
     to: "0x456...", // ERC20 transfer
     value: 0,
-    data: "0xa9059cbb000000000000000000000000789...0000000000000000000000000000000000000000000000000de0b6b3a7640000" // transfer(address,uint256)
-  }
+    data: "0xa9059cbb000000000000000000000000789...0000000000000000000000000000000000000000000000000de0b6b3a7640000", // transfer(address,uint256)
+  },
 ];
 
 // Prepare transaction with default options
-const builder = await clientUser.prepareSendTransactions(transactions);
+const builder = await clientUser.prepareSendTransaction(transactions);
 
 // Prepare transaction with custom options
-const builderWithOpts = await clientUser.prepareSendTransactions(
-  transactions,
-  {
-    deadlineSeconds: 3600, // 1 hour
-    doNotRevertOnTxFailure: true,
-    maxFeePerGas: ethers.utils.parseUnits("50", "gwei")
-  }
-);
+const builderWithOpts = await clientUser.prepareSendTransaction(transactions, {
+  deadlineSeconds: 3600, // 1 hour
+  doNotRevertOnTxFailure: true,
+  maxFeePerGas: ethers.utils.parseUnits("50", "gwei"),
+});
 
 // Prepare transaction for a new wallet deployment
 const initCodeResponse = await clientUser.getInitCode([ownerAddress]);
-const deployAndTransferBuilder = await clientUser.prepareSendTransactions(
+const deployAndTransferBuilder = await clientUser.prepareSendTransaction(
   transactions,
   {
-    initCode: response.initCode // Will deploy the wallet as part of this operation
+    initCode: response.initCode, // Will deploy the wallet as part of this operation
   }
 );
 
@@ -563,7 +586,7 @@ interface IUserOperationOptions {
   doNotRevertOnTxFailure?: boolean;
   deadlineSeconds?: number;
   callGasLimit?: BigNumberish;
-  verificationGasLimit?: BigNumberish
+  verificationGasLimit?: BigNumberish;
   preVerificationGas?: BigNumberish;
   maxFeePerGas?: BigNumberish;
   maxPriorityFeePerGas?: BigNumberish;
@@ -573,6 +596,7 @@ interface IUserOperationOptions {
 ### Parameters
 
 Takes the following parameters:
+
 - `recipientAddress`: The address that will receive the native currency
 - `amount`: The amount of native currency to send (in wei)
 - `opts` (optional): Configuration options for the user operation:
@@ -591,6 +615,7 @@ Takes the following parameters:
 Returns an `IUserOperationBuilder` containing the partial user operation that can be further processed (signed, sponsored, etc.).
 
 ### Example Usage
+
 ```ts
 // Simple ETH transfer
 const builder = await clientUser.prepareSendETH(
@@ -604,7 +629,7 @@ const builderWithOpts = await clientUser.prepareSendETH(
   ethers.utils.parseEther("0.1"), // 0.1 ETH in wei
   {
     deadlineSeconds: 1800, // 30 minutes
-    maxFeePerGas: ethers.utils.parseUnits("30", "gwei")
+    maxFeePerGas: ethers.utils.parseUnits("30", "gwei"),
   }
 );
 
@@ -614,7 +639,7 @@ const deployAndTransferBuilder = await clientUser.prepareSendETH(
   "0x123...", // recipient address
   ethers.utils.parseEther("0.1"), // 0.1 ETH in wei
   {
-    initCode: initCodeResponse.initCode // Will deploy the wallet as part of this operation
+    initCode: initCodeResponse.initCode, // Will deploy the wallet as part of this operation
   }
 );
 
@@ -647,7 +672,7 @@ interface IUserOperationOptions {
   doNotRevertOnTxFailure?: boolean;
   deadlineSeconds?: number;
   callGasLimit?: BigNumberish;
-  verificationGasLimit?: BigNumberish
+  verificationGasLimit?: BigNumberish;
   preVerificationGas?: BigNumberish;
   maxFeePerGas?: BigNumberish;
   maxPriorityFeePerGas?: BigNumberish;
@@ -657,6 +682,7 @@ interface IUserOperationOptions {
 ### Parameters
 
 Takes the following parameters:
+
 - `contractAddress`: The address of the ERC20 token contract
 - `recipientAddress`: The address that will receive the tokens
 - `amount`: The amount of tokens to send (in the token's smallest unit)
@@ -676,6 +702,7 @@ Takes the following parameters:
 Returns an `IUserOperationBuilder` containing the partial user operation that can be further processed (signed, sponsored, etc.).
 
 ### Example Usage
+
 ```ts
 // Simple ERC20 token transfer
 const builder = await clientUser.prepareSendERC20(
@@ -691,7 +718,7 @@ const builderWithOpts = await clientUser.prepareSendERC20(
   ethers.utils.parseUnits("100", 18), // 100 tokens (assuming 18 decimals)
   {
     deadlineSeconds: 1800, // 30 minutes
-    maxFeePerGas: ethers.utils.parseUnits("30", "gwei")
+    maxFeePerGas: ethers.utils.parseUnits("30", "gwei"),
   }
 );
 
@@ -702,7 +729,7 @@ const deployAndTransferBuilder = await clientUser.prepareSendERC20(
   "0x123...", // recipient address
   ethers.utils.parseUnits("100", 18), // 100 tokens (assuming 18 decimals)
   {
-    initCode: initCodeResponse.initCode // Will deploy the wallet as part of this operation
+    initCode: initCodeResponse.initCode, // Will deploy the wallet as part of this operation
   }
 );
 
@@ -721,7 +748,7 @@ Returns a builder containing the partial user operation.
 const builder = await clientUser.prepareSendModuleOperation(
     calldata: string,
     nonce: string,
-    deadline: string,
+    deadline: number,
     signatures: string,
     opts?: IUserOperationOptions
   );
@@ -736,7 +763,7 @@ interface IUserOperationOptions {
   doNotRevertOnTxFailure?: boolean;
   deadlineSeconds?: number;
   callGasLimit?: BigNumberish;
-  verificationGasLimit?: BigNumberish
+  verificationGasLimit?: BigNumberish;
   preVerificationGas?: BigNumberish;
   maxFeePerGas?: BigNumberish;
   maxPriorityFeePerGas?: BigNumberish;
@@ -746,6 +773,7 @@ interface IUserOperationOptions {
 ### Parameters
 
 Takes the following parameters:
+
 - `calldata`: The encoded function call data for the module operation
 - `nonce`: The module-specific nonce (different from the account nonce)
 - `deadline`: The expiration seconds for the module operation
@@ -766,13 +794,16 @@ Takes the following parameters:
 Returns an `IUserOperationBuilder` containing the partial user operation that can be further processed (signed, sponsored, etc.).
 
 ### Example Usage
+
 ```ts
 // Encode the module function call (example: adding a new guardian)
 const functionSelector = "0xabcdef12"; // Function selector for addGuardian(address)
-const encodedAddress = ethers.utils.defaultAbiCoder.encode(
-  ["address"],
-  ["0x123..."] // New guardian address
-).slice(2); // Remove '0x' prefix
+const encodedAddress = ethers.utils.defaultAbiCoder
+  .encode(
+    ["address"],
+    ["0x123..."] // New guardian address
+  )
+  .slice(2); // Remove '0x' prefix
 const calldata = functionSelector + encodedAddress;
 
 // Module-specific parameters
@@ -791,7 +822,7 @@ const signature = await signer.signMessage(messageHash);
 const builder = await clientUser.prepareSendModuleOperation(
   calldata,
   moduleNonce,
-  deadline.toString(),
+  deadline,
   signature
 );
 
@@ -799,11 +830,11 @@ const builder = await clientUser.prepareSendModuleOperation(
 const builderWithOpts = await clientUser.prepareSendModuleOperation(
   calldata,
   moduleNonce,
-  deadline.toString(),
+  deadline,
   signature,
   {
     callGasLimit: 500000,
-    maxFeePerGas: ethers.utils.parseUnits("30", "gwei")
+    maxFeePerGas: ethers.utils.parseUnits("30", "gwei"),
   }
 );
 
@@ -835,7 +866,7 @@ interface IUserOperationOptions {
   doNotRevertOnTxFailure?: boolean;
   deadlineSeconds?: number;
   callGasLimit?: BigNumberish;
-  verificationGasLimit?: BigNumberish
+  verificationGasLimit?: BigNumberish;
   preVerificationGas?: BigNumberish;
   maxFeePerGas?: BigNumberish;
   maxPriorityFeePerGas?: BigNumberish;
@@ -845,6 +876,7 @@ interface IUserOperationOptions {
 ### Parameters
 
 Takes the following parameters:
+
 - `accountAddress`: The address of the smart contract wallet to recover
 - `newOwner`: The address of the new owner for the wallet
 - `opts` (optional): Configuration options for the user operation:
@@ -863,11 +895,15 @@ Takes the following parameters:
 Returns an `IUserOperationBuilder` containing the partial user operation that can be further processed (signed, sponsored, etc.).
 
 ### Example Usage
+
 ```ts
 // The account must be connected using the enterprise guardian's signer
 const privateKey = "0x123..."; // Enterprise guardian's private key
 const wallet = new ethers.Wallet(privateKey);
-const guardianSigner = IndidSigner.fromSecp256k1(wallet.privateKey, SignerKind.Guardian);
+const guardianSigner = IndidSigner.fromSecp256k1(
+  wallet.privateKey,
+  SignerKind.Guardian
+);
 
 // Connect to the wallet as the guardian
 await clientUser.connectAccount(
@@ -878,7 +914,7 @@ await clientUser.connectAccount(
 // Prepare the recovery operation
 const builder = await clientUser.prepareEnterpriseRecoveryOperation(
   "0x456...", // Account to recover
-  "0x789..."  // New owner address
+  "0x789..." // New owner address
 );
 
 // Prepare with custom options
@@ -887,7 +923,7 @@ const builderWithOpts = await clientUser.prepareEnterpriseRecoveryOperation(
   "0x789...", // New owner address
   {
     callGasLimit: 500000,
-    maxFeePerGas: ethers.utils.parseUnits("30", "gwei")
+    maxFeePerGas: ethers.utils.parseUnits("30", "gwei"),
   }
 );
 
@@ -900,10 +936,31 @@ const receipt = await clientUser.waitOP(response.userOpHash);
 console.log(`User Op status: ${receipt.status}`);
 ```
 
+## fillUserOperation
+
+Fills a user operation with necessary data based on the provided calldata. Sets sender, calldata, gas parameters, and other fields required for a valid operation.
+
+Throws an error if the provider is not connected.
+
+```ts
+async fillUserOperation(
+  callData: string,
+  opts?: IUserOperationOptions
+): Promise<IUserOperationBuilder>
+```
+
+### Example Usage
+
+```ts
+const builder = await clientUser.fillUserOperation(calldata, {
+  callGasLimit: 500000,
+});
+```
+
 ## signUserOperation
 
 A method for signing user operations, it applies the signature on the builder object itself.
-Return the userOpHash that has been signed, the signature and an optional error string inside an ```ISignUserOperationResponse```.
+Return the userOpHash that has been signed, the signature and an optional error string inside an `ISignUserOperationResponse`.
 
 ```ts
 const response = await clientUser.signUserOperation(
@@ -924,26 +981,29 @@ interface ISignUserOperationResponse {
 ### Parameters
 
 Takes the following parameters:
+
 - `builder`: An `IUserOperationBuilder` object containing the user operation to be signed
 
 ### Returns
 
 Returns an object containing:
+
 - `userOpHash`: The hash of the user operation that was signed
 - `signature`: The signature applied to the user operation
 - `error`: Optional error message if the signing fails
 
 ### Example Usage
+
 ```ts
 // First prepare a user operation
 const transactions = [
   {
     to: "0x123...",
     value: ethers.utils.parseEther("0.1"),
-    data: "0x"
-  }
+    data: "0x",
+  },
 ];
-const builder = await clientUser.prepareSendTransactions(transactions);
+const builder = await clientUser.prepareSendTransaction(transactions);
 
 // Sign the user operation
 const response = await clientUser.signUserOperation(builder);
@@ -961,11 +1021,27 @@ console.log(`UserOp hash (for external signing): ${hashResponse.userOpHash}`);
 
 Note that the signature is automatically applied to the builder object. The signed operation can be sent immediately after signing without any additional steps.
 
+## buildUserOperation
+
+Builds a complete user operation from a builder object. Finalizes all fields and prepares the operation for submission.
+
+```ts
+async buildUserOperation(builder: IUserOperationBuilder) {
+  return builder.buildOp(await this.entryPoint.getAddress(), this.chainId);
+}
+```
+
+### Example Usage
+
+```ts
+const userOp = await clientUser.buildUserOperation(builder);
+```
+
 ## sendUserOperation
 
-A method for directing a builder instance to create a User Operation and send it to Indid bundler.
+A method for directing a builder instance to create a User Operation and send it to INDID bundler.
 The webhookData is optional and can be used to specify a webhook to be called upon the operation success or failure.
-Returns the User Operation Hash and a Task Id inside an ```ISendUserOpResponse```.
+Returns the User Operation Hash and a Task Id inside an `ISendUserOpResponse`.
 
 ```ts
 const response = await clientUser.sendUserOperation(
@@ -994,6 +1070,7 @@ interface IWebHookRequest {
 ### Parameters
 
 Takes the following parameters:
+
 - `builder`: An `IUserOperationBuilder` object containing the user operation to be sent
 - `webhookData` (optional): Configuration for webhook notifications about the operation execution:
   - `tag`: Mandatory field that identifies the specific webhook endpoint to call
@@ -1002,21 +1079,23 @@ Takes the following parameters:
 ### Returns
 
 Returns an object containing:
+
 - `userOpHash`: The hash of the user operation that was submitted
 - `taskId`: A unique identifier for tracking the operation execution
 - `error`: Optional error message if the submission fails
 
 ### Example Usage
+
 ```ts
 // First prepare and sign a user operation
 const transactions = [
   {
     to: "0x123...",
     value: ethers.utils.parseEther("0.1"),
-    data: "0x"
-  }
+    data: "0x",
+  },
 ];
-const builder = await clientUser.prepareSendTransactions(transactions);
+const builder = await clientUser.prepareSendTransaction(transactions);
 await clientUser.signUserOperation(builder);
 
 // Send the user operation without webhook
@@ -1028,30 +1107,51 @@ console.log(`Task ID: ${response.taskId}`);
 const receipt = await clientUser.waitOP(response.userOpHash);
 
 // Send with webhook notification
-const webhookResponse = await clientUser.sendUserOperation(
-  builder,
-  {
-    tag: "transfer-complete",
-    metadata: {
-      transferId: "123456",
-      amount: "0.1",
-      currency: "ETH"
-    }
-  }
-);
+const webhookResponse = await clientUser.sendUserOperation(builder, {
+  tag: "transfer-complete",
+  metadata: {
+    transferId: "123456",
+    amount: "0.1",
+    currency: "ETH",
+  },
+});
 
 // When using webhooks, the backend will call your webhook endpoint
 // when the operation completes, with the metadata you provided
+```
+
+## sendUserOperationBundler
+
+Sends a user operation directly to the bundler and optionally waits for its inclusion. Provides both dry-run capability and actual submission with monitoring.
+
+```ts
+async sendUserOperationBundler(
+  builder: IUserOperationBuilder,
+  timeoutMs: number = 100000,
+  waitIntervalMs: number = 5000,
+  opts?: ISendUserOperationOpts
+)
+```
+
+### Example Usage
+
+```ts
+const { userOpHash, wait } = await clientUser.sendUserOperationBundler(
+  builder,
+  120000,
+  5000
+);
+const receipt = await wait();
 ```
 
 ## getUserOperationHash
 
 A method for getting the User Operation Hash from a builder instance. This can be useful for signing the operation in a different environment.
 
-Returns the User Operation Hash inside an ```IGetUserOperationHashResponse```, this needs to be arrayfied before being signed.
+Returns the User Operation Hash inside an `IGetUserOperationHashResponse`, this needs to be arrayfied before being signed.
 
 ```ts
-const response = clientUser.getUserOperationHash(builder: IUserOperationBuilder);
+const response = await clientUser.getUserOperationHash(builder);
 ```
 
 ### Interfaces
@@ -1066,25 +1166,28 @@ interface IGetUserOperationHashResponse {
 ### Parameters
 
 Takes the following parameters:
+
 - `builder`: An `IUserOperationBuilder` object containing the user operation to get the hash for
 
 ### Returns
 
 Returns an object containing:
+
 - `userOpHash`: The hash of the user operation
 - `error`: Optional error message if the operation fails
 
 ### Example Usage
+
 ```ts
 // First prepare a user operation
 const transactions = [
   {
     to: "0x123...",
     value: ethers.utils.parseEther("0.1"),
-    data: "0x"
-  }
+    data: "0x",
+  },
 ];
-const builder = await clientUser.prepareSendTransactions(transactions);
+const builder = await clientUser.prepareSendTransaction(transactions);
 
 // Get the hash for external signing
 const response = await clientUser.getUserOperationHash(builder);
@@ -1103,7 +1206,7 @@ console.log(`External signature: ${signature}`);
 
 ## waitOP
 
-A method for waiting an User Operation Hash returned by sendUserOperation, returns the receipt inside an ```IUserOperationReceiptResponse``` upon success.
+A method for waiting an User Operation Hash returned by sendUserOperation, returns the receipt inside an `IUserOperationReceiptResponse` upon success.
 
 ```ts
 const response = await clientUser.waitOP(
@@ -1142,12 +1245,14 @@ interface IUserOperationReceipt {
 ### Parameters
 
 Takes the following parameters:
+
 - `userOpHash`: The hash of the user operation to wait for
 - `timeoutMs` (optional): Maximum time to wait in milliseconds before returning a timeout error
 
 ### Returns
 
 Returns an object containing:
+
 - `receipt`: An object with details about the executed user operation, including:
   - `blockHash`: The hash of the block in which the operation was included
   - `logsBloom`: Bloom filter for the logs
@@ -1166,16 +1271,17 @@ Returns an object containing:
 - `error`: Optional error message if the waiting operation fails
 
 ### Example Usage
+
 ```ts
 // First send a user operation
 const transactions = [
   {
     to: "0x123...",
     value: ethers.utils.parseEther("0.1"),
-    data: "0x"
-  }
+    data: "0x",
+  },
 ];
-const builder = await clientUser.prepareSendTransactions(transactions);
+const builder = await clientUser.prepareSendTransaction(transactions);
 await clientUser.signUserOperation(builder);
 const sendResponse = await clientUser.sendUserOperation(builder);
 
@@ -1192,7 +1298,9 @@ if (response.receipt.status === 1) {
   console.log(`Transaction hash: ${response.receipt.transactionHash}`);
   console.log(`Gas used: ${response.receipt.gasUsed}`);
 } else {
-  console.error(`Transaction failed: ${response.receipt.error || "Unknown error"}`);
+  console.error(
+    `Transaction failed: ${response.receipt.error || "Unknown error"}`
+  );
 }
 
 // You can also inspect logs emitted during the transaction
@@ -1205,7 +1313,7 @@ for (const log of logs) {
 
 ## waitTask
 
-A method for waiting a backend task ID returned by some sdk functions. sendUserOperation, returns the task outcome inside an ```IWaitTaskResponse``` and an optional reason with information about the task outcome.
+A method for waiting a backend task ID returned by some sdk functions. sendUserOperation, returns the task outcome inside an `IWaitTaskResponse` and an optional reason with information about the task outcome.
 
 ```ts
 const response = await clientUser.waitTask(
@@ -1239,12 +1347,14 @@ enum TaskUserOperationStatus {
 ### Parameters
 
 Takes the following parameters:
+
 - `taskId`: The ID of the task to wait for
 - `timeoutMs` (optional): Maximum time to wait in milliseconds before returning a timeout error
 
 ### Returns
 
 Returns an object containing:
+
 - `operationStatus`: The status of the task, which can be one of:
   - `NOT_FOUND`: The task was not found
   - `PENDING`: The task is still in progress
@@ -1257,16 +1367,17 @@ Returns an object containing:
 - `reason`: An optional string providing more information about the task outcome
 
 ### Example Usage
+
 ```ts
 // First send a user operation or other operation that returns a task ID
 const transactions = [
   {
     to: "0x123...",
     value: ethers.utils.parseEther("0.1"),
-    data: "0x"
-  }
+    data: "0x",
+  },
 ];
-const builder = await clientUser.prepareSendTransactions(transactions);
+const builder = await clientUser.prepareSendTransaction(transactions);
 await clientUser.signUserOperation(builder);
 const sendResponse = await clientUser.sendUserOperation(builder);
 
@@ -1302,11 +1413,11 @@ switch (response.operationStatus) {
 ## verifyWebhookSignature
 
 A static method for verifying the signature of a webhook callback, it takes an IWebHookSignatureRequest and an optional verifyingKey. If the verifyingKey is not provided the default key is used.
-Returns a ```boolean```, true if the signature is valid, false otherwise.
+Returns a `boolean`, true if the signature is valid, false otherwise.
 
 ```ts
 const response = Client.verifyWebhookSignature(
-  req: IWebHookSignatureRequest, 
+  req: IWebHookSignatureRequest,
   verifyingKey?: string
   );
 ```
@@ -1326,6 +1437,7 @@ interface IWebHookSignatureRequest {
 ### Parameters
 
 Takes the following parameters:
+
 - `req`: An object containing the webhook request data:
   - `headers`: Contains the signature headers:
     - `signature`: The digital signature to verify
@@ -1336,47 +1448,50 @@ Takes the following parameters:
 ### Returns
 
 Returns a boolean value:
+
 - `true`: If the signature is valid
 - `false`: If the signature is invalid
 
 ### Example Usage
+
 //TODO: fix this example with correct code
+
 ```ts
 // Example webhook handler in an Express.js server
-app.post('/webhook', (req, res) => {
+app.post("/webhook", (req, res) => {
   // Extract the necessary headers
   const webhookRequest = {
     headers: {
-      signature: req.headers['x-indid-signature'],
-      encodedMessage: req.headers['x-indid-encoded-message']
+      signature: req.headers["x-indid-signature"],
+      encodedMessage: req.headers["x-indid-encoded-message"],
     },
-    body: req.body
+    body: req.body,
   };
-  
+
   // Verify the signature
   const isValid = Client.verifyWebhookSignature(webhookRequest);
-  
+
   if (isValid) {
     // Signature is valid, process the webhook
     console.log("Webhook signature verified!");
-    
+
     // Extract information from the webhook
     const { userOpHash, status, metadata } = req.body;
-    
-    if (status === 'executed') {
+
+    if (status === "executed") {
       console.log(`Operation ${userOpHash} executed successfully`);
       // Handle successful operation
-    } else if (status === 'reverted') {
+    } else if (status === "reverted") {
       console.log(`Operation ${userOpHash} reverted`);
       // Handle reverted operation
     }
-    
+
     // Return success response
     res.status(200).json({ success: true });
   } else {
     // Invalid signature, reject the webhook
     console.error("Invalid webhook signature");
-    res.status(401).json({ error: 'Invalid signature' });
+    res.status(401).json({ error: "Invalid signature" });
   }
 });
 
@@ -1385,7 +1500,7 @@ const customKey = "0x123..."; // Your custom verification key
 const isValidCustom = Client.verifyWebhookSignature(webhookRequest, customKey);
 ```
 
-## prepareDelegatedTransaction
+## prepareDelegatedTransactions
 
 A method for preparing a delegated transaction without sending it. This function creates the necessary data for a delegated transaction that can be sent later with an admin sdk. The account signer is used to sign the transaction data using EIP-712.
 
@@ -1394,7 +1509,7 @@ If chainId wasn't provided during initialization, it must be provided in the opt
 Returns an object implementing ISendDelegatedTransactionsRequest to be sent with sendDelegatedTransactions function of admin sdk.
 
 ```ts
-const response = await clientUser.prepareDelegatedTransaction(
+const response = await clientUser.prepareDelegatedTransactions(
   transactions: ICall[],
   opts?: IDelegatedTransactionOptions
 ): Promise<ISendDelegatedTransactionsRequest>;
@@ -1435,6 +1550,7 @@ interface ISendDelegatedTransactionsRequest {
 ### Parameters
 
 Takes the following parameters:
+
 - `transactions`: An array of `ICall` objects, each containing:
   - `to`: The recipient address of the transaction
   - `value`: The amount of native currency to send (in wei)
@@ -1448,6 +1564,7 @@ Takes the following parameters:
 ### Returns
 
 Returns a promise that resolves to an `ISendDelegatedTransactionsRequest` object containing all the necessary data for submitting the delegated transaction through an admin SDK, including:
+
 - `accountAddress`: The address of the smart contract wallet
 - `chainId`: The blockchain network identifier
 - `moduleAddress`: The address of the module handling the transaction
@@ -1458,35 +1575,33 @@ Returns a promise that resolves to an `ISendDelegatedTransactionsRequest` object
 - `webhookData` (optional): Webhook configuration
 
 ### Example Usage
+
 ```ts
 // Define transactions to execute
 const transactions = [
   {
     to: "0x123...", // ETH transfer
     value: ethers.utils.parseEther("0.1"),
-    data: "0x" // empty calldata for simple transfers
+    data: "0x", // empty calldata for simple transfers
   },
   {
     to: "0x456...", // ERC20 transfer
     value: 0,
-    data: "0xa9059cbb000000000000000000000000789...0000000000000000000000000000000000000000000000000de0b6b3a7640000" // transfer(address,uint256)
-  }
+    data: "0xa9059cbb000000000000000000000000789...0000000000000000000000000000000000000000000000000de0b6b3a7640000", // transfer(address,uint256)
+  },
 ];
 
 // Prepare the delegated transaction
-const preparedTx = await clientUser.prepareDelegatedTransaction(
-  transactions,
-  {
-    chainId: 137, // Polygon network
-    deadlineSeconds: 3600, // 1 hour
-    webhookData: {
-      tag: "delegated-transfer",
-      metadata: {
-        purpose: "example-transaction"
-      }
-    }
-  }
-);
+const preparedTx = await clientUser.prepareDelegatedTransactions(transactions, {
+  chainId: 137, // Polygon network
+  deadlineSeconds: 3600, // 1 hour
+  webhookData: {
+    tag: "delegated-transfer",
+    metadata: {
+      purpose: "example-transaction",
+    },
+  },
+});
 
 // The prepared transaction can now be sent using an admin SDK
 console.log("Prepared transaction data:");
@@ -1539,6 +1654,7 @@ interface ICall {
 ### Parameters
 
 Takes the following parameters:
+
 - `params`: An array of deployment parameters, where each item contains:
   - `bytecode`: The compiled contract bytecode to deploy
   - `salt` (optional): A unique value to ensure deployment address uniqueness. Defaults to "0" if not provided
@@ -1546,33 +1662,37 @@ Takes the following parameters:
 ### Returns
 
 Returns an object containing:
+
 - `expectedAddresses`: Array of calculated contract addresses that will result from the deployments
-- `deployTxs`: Array of transaction objects (`ICall`) ready to be used with either `prepareSendTransactions` or `prepareDelegatedTransaction`
+- `deployTxs`: Array of transaction objects (`ICall`) ready to be used with either `prepareSendTransaction` or `prepareDelegatedTransactions`
 
 ### Example Usage
+
 ```ts
 // Prepare contract deployment transactions
-const deploymentResult = await clientUser.prepareContractDeploymentTransactions([
-  { 
-    bytecode: "0x608060405234801561001057600080fd5b50...", 
-    salt: "0x123" 
-  },
-  { 
-    bytecode: "0x608060405234801561001057600080fd5b50..." 
-    // uses default salt
-  }
-]);
+const deploymentResult = await clientUser.prepareContractDeploymentTransactions(
+  [
+    {
+      bytecode: "0x608060405234801561001057600080fd5b50...",
+      salt: "0x123",
+    },
+    {
+      bytecode: "0x608060405234801561001057600080fd5b50...",
+      // uses default salt
+    },
+  ]
+);
 
 // Get the calculated addresses for reference
 const { expectedAddresses, deployTxs } = deploymentResult;
 
 console.log("Expected contract addresses:");
 for (let i = 0; i < expectedAddresses.length; i++) {
-  console.log(`Contract ${i+1}: ${expectedAddresses[i]}`);
+  console.log(`Contract ${i + 1}: ${expectedAddresses[i]}`);
 }
 
 // Deploy the contracts using user operations
-const builder = await clientUser.prepareSendTransactions(deployTxs);
+const builder = await clientUser.prepareSendTransaction(deployTxs);
 await clientUser.signUserOperation(builder);
 const response = await clientUser.sendUserOperation(builder);
 
@@ -1581,7 +1701,7 @@ const receipt = await clientUser.waitOP(response.userOpHash);
 console.log(`Deployment transaction status: ${receipt.receipt.status}`);
 
 // Or deploy using delegated transactions
-const preparedTx = await clientUser.prepareDelegatedTransaction(deployTxs);
+const preparedTx = await clientUser.prepareDelegatedTransactions(deployTxs);
 // Then send with admin SDK
 // const response = await adminClient.sendPreparedDelegatedTransactions(preparedTx);
 ```

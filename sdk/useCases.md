@@ -41,7 +41,13 @@ clientUser.connectAccount(
 now you'll have to craft a transaction to send an nft to a friend, once you have crafted the calldata you can use the prepareSendTransactions method to prepare the user operation.
 
 ```ts
-const builder = await clientUser.prepareSendTransactions([to],[value],[calldata])
+const builder = await clientUser.prepareSendTransaction([
+  {
+    to,
+    value,
+    data: calldata,
+  }
+])
 ```
 
 "to" will be the address of the nft contract, "value" will be 0, "calldata" will be the calldata of the transfer method of the nft contract with the encoded friend address and token id.
