@@ -1,6 +1,6 @@
 # Web3Auth
 
-If you want to use Web3Auth with Indid you can use the following code snippets to bootstrap the social login and signer.
+If you want to use Web3Auth with INDID you can use the following code snippets to bootstrap the social login and signer.
 
 ## Imports
 
@@ -53,7 +53,7 @@ const ethersProvider = new ethers.providers.Web3Provider(
 const web3AuthSigner = ethersProvider.getSigner();
 ```
 
-## Using the signer with Indid SDK
+## Using the signer with INDID SDK
 
 You can now use the signer as the usual ethers signer.
 

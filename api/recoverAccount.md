@@ -2,23 +2,40 @@
 
 Category: `Recover Account`
 
-Description: Transfers the ownership of a smart contract wallet to a new owner. The request is a JSON (IRecoveryRequest) and the reply returns a JSON containing the hash of the transaction that changed the owner of the wallet.
+Description: Transfers the ownership of a smart contract wallet to a new owner. On success, the response includes a JSON with the transaction hash that changed the wallet owner on-chain.
 
 Type: `POST`
 
 URL: /recovery-account
 
+### Requirements
+
+- A valid API Key must be provided (header `Authorization: Bearer <API_KEY>`)
+- The provided `chainId` must be configured for the project
+- The Account Abstraction module must be enabled for the project
+
 ### Body Params (IRecoveryRequest)
 
-| Name | Type | Required? | Description |
-| --- | --- | --- | --- |
-| walletAddress | string | yes | The smart contract wallet to recover |
-| newOwner | string | yes | The address of the new owner of the smart contract wallet |
-| signature | string | yes | The signature of all the guardians |
-| nonce | number | yes | The internal nonce of the module, mandatory because it is not sequential |
-| deadline | number | yes | The deadline of the request |
-| moduleAddress | string | no | The address of the module on which the recovery method has to be called |
-| params | any | no |  |
+| Name          | Type         | Description                                                                                 | Required |
+| ------------- | ------------ | ------------------------------------------------------------------------------------------- | -------- |
+| walletAddress | string       | Address of the smart contract wallet to recover                                             | ✅       |
+| newOwner      | IWalletOwner | Object representing the new wallet owner                                                    | ✅       |
+| signature     | string       | Aggregated signature authorizing the recovery                                               | ✅       |
+| nonce         | number       | Nonce used to prevent replay attacks                                                        | ✅       |
+| deadline      | number       | Unix timestamp after which the request is no longer valid                                   | ✅       |
+| chainId       | ChainId      | Optional blockchain ID of the wallet; defaults to the project’s configured chain if omitted |          |
+| moduleAddress | string       | Optional specific module address to use for the recovery operation                          |          |
+| calldata      | string       | Optional encoded call data to execute on the module                                         |          |
+| params        | any          | Optional additional parameters specific to the recovery implementation                      |          |
+
+### Response
+
+```ts
+type RecoverAccountResponse = {
+  taskId: string; // Unique ID to track the recovery process
+  transactionHash: string; // Hash of the on-chain transaction that changed the owner
+};
+```
 
 ### What is the signature in a recovery request?
 
@@ -40,9 +57,9 @@ export async function signEIP712Transaction(
   deadline: number,
   signers: Wallet[] | JsonRpcSigner[]
 ): Promise<{ signature: string; nonce: BigInt }> {
-    
-  
-  /* 
+
+
+  /*
         Preparing the signature of the standard Transaction message
     */
   const domain = {
@@ -62,7 +79,7 @@ export async function signEIP712Transaction(
     ],
   };
 
-  
+
 
   const ABI = {
       "inputs": [
@@ -105,8 +122,8 @@ export async function signEIP712Transaction(
     signers.sort((a, b) => {
         return Number(await a.getAddress()) - Number(await b.getAddress())
     }));
-  
-  
+
+
   for (let index = 0; index < signers.length; index++) {
     const element = signers[index];
     signature += (await element._signTypedData(domain, types, value)).slice(2);
@@ -118,11 +135,11 @@ export async function signEIP712Transaction(
 
 ### Error Handling
 
-| HTTP Status | Meaning |
-| --- | --- |
-| 200 | OK |
-| 512 | Internal server error while trying to recover account |
-| 515 | Error during recoverAccountRequest parsing. Wrong input format for the recoverAccountRequest |
+| HTTP Status | Meaning                                                         |
+| ----------- | --------------------------------------------------------------- |
+| 200         | Recovery process started successfully                           |
+| 512         | Internal server error while processing the recovery request     |
+| 515         | Parsing error: wrong input format for the recoverAccountRequest |
 
 ## Code Examples
 
@@ -135,8 +152,8 @@ npm i node-fetch
 ### Request
 
 ```tsx
-data: IRecoverRequest //input
-const url =  `${this.backendUrl}/recovery-account`
+data: IRecoverRequest; // input
+const url = `${this.backendUrl}/recovery-account`;
 let config = {
   method: "post",
   maxBodyLength: Infinity,
@@ -147,7 +164,6 @@ let config = {
   body: JSON.stringify(data),
 };
 
-const response = await fetch(url, config)
+const response = await fetch(url, config);
 const JSONResponse = await response.json();
-
 ```

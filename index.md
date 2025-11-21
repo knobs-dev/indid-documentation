@@ -1,28 +1,18 @@
 ---
-# https://vitepress.dev/reference/default-theme-home-page
-layout: home
+layout: page
 
-hero:
-  name: "Indid Docs"
-  text: "Smart Wallets Infrastructure"
-  tagline: Simple and powerful APIs for your blockchain applications
-  actions:
-    - theme: brand
-      text: Get Started
-      link: /getting-started/gettingStarted
-    - theme: alt
-      text: API Examples
-      link: /api/endpointsDetailsIntro
-    - theme: alt
-      text: SDK Examples
-      link: /sdk/gettingStarted
-
-# features:
-#   - title: Simple
-#     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-#   - title: Fast
-#     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
-#   - title: Secure
-#     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+# Redirect
+head:
+  - - meta
+    - http-equiv: refresh
+      content: "0; url=/introduction/overview"
+  - - link
+    - rel: canonical
+      href: /introduction/overview
 ---
 
+<script setup>
+  if (typeof window !== 'undefined') {
+    window.location.replace('/introduction/overview')
+  }
+</script>
